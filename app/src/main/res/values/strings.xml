@@ -1,0 +1,34 @@
+<resources>
+    <string name="app_name">CensoAlumbradoPublico</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="cve_mun">CVE MUN</string>
+    <string name="municipio">Municipio</string>
+    <string name="divisi_n">División</string>
+    <string name="zona">Zona</string>
+    <string name="agencia">Agencia</string>
+    <string name="estado">Estado</string>
+    <string name="calle_margen">Calle margen</string>
+    <string name="tensi_n">Tensión</string>
+    <string name="calle">Calle</string>
+    <string name="HORIZONTAL">Horizonal</string>
+    <string name="vertical">Vertical</string>
+    <string name="glorieta">Glorieta</string>
+    <string name="carretera">Carretera</string>
+    <string name="derecha">Derecha</string>
+    <string name="izquierda">Izquierda</string>
+    <string name="centro">Centro</string>
+    <string name="manzana">Manzana</string>
+    <string name="baja">Baja</string>
+    <string name="media">Media</string>
+    <string name="entre_calle_1">Entre Calle 1</string>
+    <string name="entre_calle_2">Entre Calle 2</string>
+    <string name="poblacion_o_colonia">Poblacion o colonia</string>
+    <string name="localidad">Localidad</string>
+    <string-array name="calleMargen">
+        <item>Derecha</item>
+        <item>Izquierda</item>
+        <item>Centro</item>
+    </string-array>
+</resources>
