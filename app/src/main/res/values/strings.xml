@@ -26,6 +26,7 @@
     <string name="entre_calle_2">Entre Calle 2</string>
     <string name="poblacion_o_colonia">Poblacion o colonia</string>
     <string name="localidad">Localidad</string>
+    <string name="guardar">Guardar</string>
     <string-array name="calleMargen">
         <item>Derecha</item>
         <item>Izquierda</item>

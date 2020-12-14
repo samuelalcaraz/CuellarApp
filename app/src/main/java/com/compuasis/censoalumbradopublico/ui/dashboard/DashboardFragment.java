@@ -6,6 +6,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,11 +23,13 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.compuasis.censoalumbradopublico.R;
+import com.compuasis.censoalumbradopublico.entities.ECenso;
 import com.compuasis.censoalumbradopublico.entities.EEstado;
 import com.compuasis.censoalumbradopublico.entities.EMunicipio;
 import com.compuasis.censoalumbradopublico.tasks.TObtenerEstado;
 import com.compuasis.censoalumbradopublico.tasks.TObtenerMunicipio;
 import com.compuasis.censoalumbradopublico.ui.MultipleChioceDialogFragment;
+import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,8 +40,13 @@ public class DashboardFragment extends Fragment implements MultipleChioceDialogF
 
     DashboardFragment fragment;
 
-    Spinner spEstados, spMunicipios, spTension;
-    TextView tvCalleMargen;
+    Spinner spEstados, spMunicipios;
+    RadioGroup rgCalle, rgTension;
+    Button btnGuardar;
+
+    TextInputEditText txtDivision, txtZona, txtAgencia, txtCalle, txtCalleMargen, txtManzana,
+        txtEntreCalle1,  txtEntreCalle2, txtPoblacionColonia, txtLocalidad;
+    CheckBox chkCalleMargenDerecha, chkCalleMargenIzquierda, chkCalleMargenCentro;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -59,6 +70,40 @@ public class DashboardFragment extends Fragment implements MultipleChioceDialogF
         spEstados = root.findViewById( R.id.spEstados );
         spMunicipios = root.findViewById( R.id.spMunicpios );
 
+        rgCalle = root.findViewById( R.id.rgCalle );
+        rgTension = root.findViewById( R.id.rgTension );
+
+        txtDivision = root.findViewById(R.id.txtDivision );
+        txtZona = root.findViewById( R.id.txtZona );
+        txtAgencia = root.findViewById( R.id.txtAgencia );
+        txtCalle = root.findViewById( R.id.txtCalle );
+        txtCalleMargen = root.findViewById( R.id.txtCalleMargen );
+        txtManzana = root.findViewById(R.id.txtManzana );
+        txtEntreCalle1 = root.findViewById( R.id.txtEntreCalle1 );
+        txtEntreCalle2 = root.findViewById( R.id.txtEntreCalle2 );
+        txtPoblacionColonia = root.findViewById( R.id.txtPoblacionColonia );
+        txtLocalidad = root.findViewById( R.id.txtLocalidad );
+
+        chkCalleMargenDerecha = root.findViewById( R.id.chkCalleMargenDerecha );
+        chkCalleMargenIzquierda = root.findViewById( R.id.chkCalleMargenIzquierda );
+        chkCalleMargenCentro = root.findViewById( R.id.chkCalleMargenCentro );
+
+        btnGuardar = root.findViewById( R.id.btnGuardar );
+
+        btnGuardar.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                ECenso censo = new ECenso();
+                EMunicipio municipio = (EMunicipio) spMunicipios.getSelectedItem();
+
+
+
+
+
+            }
+        } );
+
 
 
 
@@ -79,13 +124,7 @@ public class DashboardFragment extends Fragment implements MultipleChioceDialogF
 
 
 
-    private void fillTensions() {
 
-        String[] items = { "Baja", "Media"};
-        ArrayAdapter<String> adapter  = new ArrayAdapter<>( getContext(), android.R.layout.simple_spinner_dropdown_item,  items);
-        spTension.setAdapter( adapter );
-
-    }
 
     public void fillStates(List<EEstado> stateList){
 

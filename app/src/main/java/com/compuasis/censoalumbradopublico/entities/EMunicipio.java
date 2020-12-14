@@ -4,7 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "municipio")
+@Entity(tableName = "Municipio")
 public class EMunicipio {
 
     @PrimaryKey

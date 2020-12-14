@@ -8,19 +8,23 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
+import com.compuasis.censoalumbradopublico.entities.ECenso;
 import com.compuasis.censoalumbradopublico.entities.EEstado;
 import com.compuasis.censoalumbradopublico.entities.EMunicipio;
 
 @Database(entities =
         {
                 EEstado.class,
-                EMunicipio.class
-        }, version = 2)
+                EMunicipio.class,
+                ECenso.class
+        }, version = 3)
 public abstract class database extends RoomDatabase {
 
     public abstract DEstado dEstado();
 
     public  abstract  DMunicipio dMunicipio();
+
+    public abstract  DCenso dCenso();
 
     private static volatile database INSTANCE;
 
