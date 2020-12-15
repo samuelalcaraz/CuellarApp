@@ -14,6 +14,8 @@ public interface DEstado {
     @Query("SELECT * FROM estado")
     List<EEstado> getAll();
 
+
+
     @Query("DELETE FROM estado")
     void deleteAll();
 

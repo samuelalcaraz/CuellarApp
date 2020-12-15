@@ -8,6 +8,15 @@
     android:layout_margin="0dp"
     android:padding="0dp">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@null"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:popupTheme="@style/AppTheme" />
+
     <TextView
         android:id="@+id/tvEstado"
         android:layout_width="0dp"

@@ -11,12 +11,22 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.compuasis.censoalumbradopublico.R;
+import com.compuasis.censoalumbradopublico.adapters.CensosAdapter;
+import com.compuasis.censoalumbradopublico.entities.ECenso;
+import com.compuasis.censoalumbradopublico.tasks.TObtenerCensos;
+
+import java.util.List;
 
 public class HomeFragment extends Fragment {
 
     private HomeViewModel homeViewModel;
+    RecyclerView rvCensos;
+
+    HomeFragment fragment;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -30,6 +40,23 @@ public class HomeFragment extends Fragment {
                 textView.setText( s );
             }
         } );*/
+
+
+        rvCensos = (RecyclerView) root.findViewById(R.id.rvCensos);
+
+        this.fragment = this;
+
+        new TObtenerCensos( fragment.getContext(), fragment ).execute(  );
+
+
         return root;
+    }
+
+    public void fillCensos(List<ECenso> censos) {
+
+        CensosAdapter adapter = new CensosAdapter(censos);
+        rvCensos.setAdapter(adapter);
+        rvCensos.setLayoutManager(new LinearLayoutManager(fragment.getContext()));
+
     }
 }

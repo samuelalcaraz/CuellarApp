@@ -2,21 +2,35 @@ package com.compuasis.censoalumbradopublico.tasks;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
+
+import androidx.fragment.app.Fragment;
 
 import com.compuasis.censoalumbradopublico.data.DEstado;
 import com.compuasis.censoalumbradopublico.data.database;
 import com.compuasis.censoalumbradopublico.entities.EEstado;
+import com.compuasis.censoalumbradopublico.services.Cities;
+import com.compuasis.censoalumbradopublico.ui.dashboard.DashboardFragment;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
 
 public class TInsertarEstado extends AsyncTask<List<EEstado>, Void, Void> {
 
-private final WeakReference<Context> context;
+    private final WeakReference<Context> context;
+    DashboardFragment fragment;
 
-    public TInsertarEstado(Context context)
+    public TInsertarEstado(Context context, DashboardFragment fragment)
     {
         this.context = new WeakReference<>(context);
+        this.fragment = fragment;
+    }
+
+    @Override
+    protected void onPostExecute(Void aVoid) {
+
+        new Cities(context.get(), fragment).execute( "https://alcaraz.mx/hosting/censoap/services/cities.php" );
+
     }
 
     @SafeVarargs
@@ -31,6 +45,7 @@ private final WeakReference<Context> context;
         for (EEstado estado : listaEstados) {
             dEstado.insert( estado );
         }
+        Log.d( "InsertarEstados", String.valueOf( listaEstados.size() ) );
 
         return null;
     }

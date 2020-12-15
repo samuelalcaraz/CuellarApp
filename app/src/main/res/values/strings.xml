@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">CensoAlumbradoPublico</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_home">Lista</string>
+    <string name="title_dashboard">Censo</string>
+    <string name="title_notifications">Postes</string>
     <string name="cve_mun">CVE MUN</string>
     <string name="municipio">Municipio</string>
     <string name="divisi_n">División</string>
@@ -27,6 +27,7 @@
     <string name="poblacion_o_colonia">Poblacion o colonia</string>
     <string name="localidad">Localidad</string>
     <string name="guardar">Guardar</string>
+    <string name="actualizar_estados">Actualizar estados</string>
     <string-array name="calleMargen">
         <item>Derecha</item>
         <item>Izquierda</item>

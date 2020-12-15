@@ -2,6 +2,9 @@ package com.compuasis.censoalumbradopublico.ui.dashboard;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -16,6 +19,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -26,10 +30,16 @@ import com.compuasis.censoalumbradopublico.R;
 import com.compuasis.censoalumbradopublico.entities.ECenso;
 import com.compuasis.censoalumbradopublico.entities.EEstado;
 import com.compuasis.censoalumbradopublico.entities.EMunicipio;
+import com.compuasis.censoalumbradopublico.services.Cities;
+import com.compuasis.censoalumbradopublico.services.States;
+import com.compuasis.censoalumbradopublico.tasks.TInsertarCenso;
+import com.compuasis.censoalumbradopublico.tasks.TInsertarEstado;
 import com.compuasis.censoalumbradopublico.tasks.TObtenerEstado;
 import com.compuasis.censoalumbradopublico.tasks.TObtenerMunicipio;
 import com.compuasis.censoalumbradopublico.ui.MultipleChioceDialogFragment;
 import com.google.android.material.textfield.TextInputEditText;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,6 +58,16 @@ public class DashboardFragment extends Fragment implements MultipleChioceDialogF
         txtEntreCalle1,  txtEntreCalle2, txtPoblacionColonia, txtLocalidad;
     CheckBox chkCalleMargenDerecha, chkCalleMargenIzquierda, chkCalleMargenCentro;
 
+    public DashboardFragment() {
+
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
+        super.onCreate( savedInstanceState );
+    }
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
@@ -57,15 +77,6 @@ public class DashboardFragment extends Fragment implements MultipleChioceDialogF
 
         View root = inflater.inflate( R.layout.fragment_dashboard, container, false );
 
-  /*      final TextView textView = root.findViewById( R.id.text_dashboard );
-
-        dashboardViewModel.getText().observe( getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText( s );
-            }
-        } );
-*/
 
         spEstados = root.findViewById( R.id.spEstados );
         spMunicipios = root.findViewById( R.id.spMunicpios );
@@ -90,16 +101,32 @@ public class DashboardFragment extends Fragment implements MultipleChioceDialogF
 
         btnGuardar = root.findViewById( R.id.btnGuardar );
 
+
+
         btnGuardar.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 ECenso censo = new ECenso();
                 EMunicipio municipio = (EMunicipio) spMunicipios.getSelectedItem();
+                censo.IdMunicipio = municipio.IdMunicipio;
+                censo.Division = txtDivision.getText().toString();
+                censo.Zona = txtZona.getText().toString();
+                censo.Agencia = txtAgencia.getText().toString();
+                censo.Calle = txtCalle.getText().toString();
+                censo.IdCalleTipo =Integer.parseInt( getActivity().findViewById( rgCalle.getCheckedRadioButtonId()).getTag().toString());
+                censo.CalleMargen = txtCalleMargen.getText().toString();
+                censo.CalleMargenIzquierda = chkCalleMargenIzquierda.isChecked();
+                censo.CalleMargenDerecha = chkCalleMargenDerecha.isChecked();
+                censo.CalleMargenCentro = chkCalleMargenCentro.isChecked();
+                censo.Manzana = txtManzana.getText().toString();
+                censo.IdTension = Integer.parseInt(getActivity().findViewById( rgTension.getCheckedRadioButtonId()).getTag().toString());
+                censo.EntreCalle1 = txtEntreCalle1.getText().toString();
+                censo.EntreCalle2 = txtEntreCalle2.getText().toString();
+                censo.PoblacionColonia = txtPoblacionColonia.getText().toString();
+                censo.Localidad = txtLocalidad.getText().toString();
 
-
-
-
+                new TInsertarCenso( fragment.getContext() ).execute( censo );
 
             }
         } );
@@ -110,16 +137,41 @@ public class DashboardFragment extends Fragment implements MultipleChioceDialogF
 
 
 
-        //new Cities(getContext()).execute( "https://alcaraz.mx/hosting/censoap/services/cities.php" );
-        //new States(getContext()).execute( "https://alcaraz.mx/hosting/censoap/services/states.php" );
 
 
 
-        new TObtenerEstado( getContext(), this ).execute(  );
+        new TObtenerEstado( this.getContext(), this.fragment ).execute(  );
+
+
 
 
 
         return  root;
+    }
+
+
+
+    @Override
+    public void onCreateOptionsMenu(@NotNull Menu menu, MenuInflater inflater) {
+        //inflate menu
+        inflater.inflate(R.menu.censo_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        //handle menu item clicks
+        int id = item.getItemId();
+
+        if (id == R.id.action_actualizar) {
+
+             new States(getContext(), fragment).execute( "https://alcaraz.mx/hosting/censoap/services/states.php" );
+
+            Toast.makeText(getActivity(), "Actualizando Estados y municipios", Toast.LENGTH_LONG).show();
+        }
+
+
+        return super.onOptionsItemSelected(item);
     }
 
 

@@ -15,13 +15,21 @@ public class ECenso {
 
     public String Division;
 
-    public String NombreCalle;
+    public String Zona;
+
+    public String Agencia;
+
+    public String Calle;
 
     public int IdCalleTipo;
 
     public String CalleMargen;
 
-    public int IdCalleMargenTipo;
+    public boolean CalleMargenIzquierda;
+
+    public boolean CalleMargenDerecha;
+
+    public boolean CalleMargenCentro;
 
     public String Manzana;
 
@@ -34,6 +42,18 @@ public class ECenso {
     public String PoblacionColonia;
 
     public String Localidad;
+
+    public String NombreEstado;
+
+    public String NombreMunicipio;
+
+    public String getEstadoMunicipio() {
+        return NombreEstado + ", " + NombreMunicipio;
+    }
+
+    public String getDivisionZonaAgencia() {
+        return Division + ", " + Zona + ", " + Agencia;
+    }
 
     @NotNull
     @Override

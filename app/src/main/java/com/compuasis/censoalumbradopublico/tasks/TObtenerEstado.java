@@ -2,10 +2,12 @@ package com.compuasis.censoalumbradopublico.tasks;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.compuasis.censoalumbradopublico.data.DEstado;
 import com.compuasis.censoalumbradopublico.data.database;
 import com.compuasis.censoalumbradopublico.entities.EEstado;
+import com.compuasis.censoalumbradopublico.services.Cities;
 import com.compuasis.censoalumbradopublico.ui.dashboard.DashboardFragment;
 
 import java.lang.ref.WeakReference;
@@ -25,7 +27,9 @@ public class TObtenerEstado extends AsyncTask<Void, Void, List<EEstado>> {
     protected void onPostExecute(List<EEstado> eEstados) {
         super.onPostExecute( eEstados );
 
+        Log.i( "BD:ObtenerEstados", String.valueOf( eEstados.size() ) );
         this.fragment.fillStates( eEstados );
+
     }
 
     @Override
@@ -33,11 +37,7 @@ public class TObtenerEstado extends AsyncTask<Void, Void, List<EEstado>> {
 
         DEstado dEstado = database.getDatabase(context.get()).dEstado();
 
-        List<EEstado> eEstados = dEstado.getAll();
-
-
-
-        return  eEstados;
+        return dEstado.getAll();
 
     }
 }
