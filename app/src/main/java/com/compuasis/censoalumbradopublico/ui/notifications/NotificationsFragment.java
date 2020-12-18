@@ -2,10 +2,14 @@ package com.compuasis.censoalumbradopublico.ui.notifications;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.ActivityNotFoundException;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Looper;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -13,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -50,6 +55,7 @@ import java.util.Locale;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
+import static android.app.Activity.RESULT_OK;
 import static java.lang.Math.round;
 
 public class NotificationsFragment extends Fragment {
@@ -60,6 +66,8 @@ public class NotificationsFragment extends Fragment {
 
     TextInputEditText txtGeoX, txtGeoY;
 
+    ImageView ivFoto;
+
     NotificationsFragment fragment;
 
     SweetAlertDialog pDialog = null;
@@ -67,9 +75,28 @@ public class NotificationsFragment extends Fragment {
     private FusedLocationProviderClient fusedLocationClient;
 
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
+    static final int REQUEST_IMAGE_CAPTURE = 1;
 
     private LocationRequest locationRequest;
     private LocationCallback locationCallback;
+
+    private void dispatchTakePictureIntent() {
+        Intent takePictureIntent = new Intent( MediaStore.ACTION_IMAGE_CAPTURE);
+        try {
+            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+        } catch (ActivityNotFoundException e) {
+            // display error state to the user
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            ivFoto.setImageBitmap(imageBitmap);
+        }
+    }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -87,6 +114,15 @@ public class NotificationsFragment extends Fragment {
 
         txtGeoX = root.findViewById( R.id.txtGeoX );
         txtGeoY = root.findViewById( R.id.txtGeoY );
+
+        ivFoto = root.findViewById( R.id.ivFoto );
+
+        ivFoto.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dispatchTakePictureIntent();
+            }
+        } );
 
         new TObtenerCensosCombo( this.getContext(), fragment ).execute();
         new TObtenerTipoPoste( this.getContext(), this.fragment ).execute();
