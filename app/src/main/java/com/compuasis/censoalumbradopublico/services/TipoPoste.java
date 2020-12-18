@@ -10,6 +10,7 @@ import com.compuasis.censoalumbradopublico.entities.ETipoPoste;
 import com.compuasis.censoalumbradopublico.tasks.TInsertarMunicipio;
 import com.compuasis.censoalumbradopublico.tasks.TInsertarTipoPoste;
 import com.compuasis.censoalumbradopublico.ui.dashboard.DashboardFragment;
+import com.compuasis.censoalumbradopublico.ui.notifications.NotificationsFragment;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.IOException;
@@ -21,14 +22,17 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class TipoPoste extends AsyncTask<String, Void, List<ETipoPoste>> {
+public class TipoPoste extends AsyncTask<Void, Void, List<ETipoPoste>> {
 
     OkHttpClient client = new OkHttpClient();
     private final WeakReference<Context> context;
+    private final String url = "https://alcaraz.mx/hosting/censoap/services/tipoposte.php";
 
-    public TipoPoste(Context context)
+    NotificationsFragment frament;
+    public TipoPoste(Context context, NotificationsFragment fragment)
     {
         this.context = new WeakReference<>(context);
+        this.frament = fragment;
     }
 
     @Override
@@ -36,14 +40,14 @@ public class TipoPoste extends AsyncTask<String, Void, List<ETipoPoste>> {
 
         super.onPostExecute( s );
 
-        new TInsertarTipoPoste( this.context.get() ).execute( s );
+        new TInsertarTipoPoste( this.context.get(), this.frament ).execute( s );
     }
 
     @Override
-    protected List<ETipoPoste> doInBackground(String... strings) {
+    protected List<ETipoPoste> doInBackground(Void... voids) {
 
         Request request = new Request.Builder()
-                .url( strings[0] )
+                .url( url )
                 .build();
 
         String res;

@@ -11,6 +11,7 @@ import com.compuasis.censoalumbradopublico.entities.EEstado;
 import com.compuasis.censoalumbradopublico.entities.ETipoPoste;
 import com.compuasis.censoalumbradopublico.services.Cities;
 import com.compuasis.censoalumbradopublico.ui.dashboard.DashboardFragment;
+import com.compuasis.censoalumbradopublico.ui.notifications.NotificationsFragment;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
@@ -18,11 +19,19 @@ import java.util.List;
 public class TInsertarTipoPoste extends AsyncTask<List<ETipoPoste>, Void, Void> {
 
     private final WeakReference<Context> context;
-    DashboardFragment fragment;
+    NotificationsFragment fragment;
 
-    public TInsertarTipoPoste(Context context)
+    public TInsertarTipoPoste(Context context, NotificationsFragment fragment)
     {
         this.context = new WeakReference<>(context);
+        this.fragment = fragment;
+    }
+
+    @Override
+    protected void onPostExecute(Void aVoid) {
+        super.onPostExecute( aVoid );
+
+        new TObtenerTipoPoste( this.context.get(), this.fragment ).execute(  );
     }
 
     @SafeVarargs
