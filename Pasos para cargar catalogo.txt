@@ -1,0 +1,8 @@
+Crear servicio en PHP
+Crear Entidad
+Crear servicio
+Agregar entidad adatabase
+Aumentar version
+Crear data
+Crear task insertar
+Crear task obtener

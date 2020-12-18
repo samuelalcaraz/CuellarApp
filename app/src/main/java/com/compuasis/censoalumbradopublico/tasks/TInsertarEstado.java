@@ -30,7 +30,6 @@ public class TInsertarEstado extends AsyncTask<List<EEstado>, Void, Void> {
     @Override
     protected void onPostExecute(Void aVoid) {
 
-        new TipoPoste( context.get() ).execute(  "https://alcaraz.mx/hosting/censoap/services/tipoposte.php");
         new Cities(context.get(), fragment).execute( "https://alcaraz.mx/hosting/censoap/services/cities.php" );
 
     }
