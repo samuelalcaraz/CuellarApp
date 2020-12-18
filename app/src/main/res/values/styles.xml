@@ -5,6 +5,18 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+
+
+    </style>
+
+    <style name="ActionButtonStyle" parent="Widget.AppCompat.ActionButton">
+        <item name="android:minWidth">0dip</item>
+        <item name="android:paddingStart">16dip</item>
+        <item name="android:paddingEnd">16dip</item>
+    </style>
+
+    <style name="TextLabel" parent="TextAppearance.Design.Hint">
+        <item name="android:textSize">10sp</item>
     </style>
 
 </resources>

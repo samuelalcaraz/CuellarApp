@@ -26,6 +26,9 @@
     <string name="entre_calle_2">Entre Calle 2</string>
     <string name="poblacion_o_colonia">Poblacion o colonia</string>
     <string name="localidad">Localidad</string>
+    <string name="actualizar_estados">Actualizar estados</string>
+    <string name="actualizar">Actualizar</string>
+    <string name="nuevo">Nuevo</string>
     <string name="guardar">Guardar</string>
     <string name="id_poste">ID Poste</string>
     <string name="cantidad">Cantidad</string>

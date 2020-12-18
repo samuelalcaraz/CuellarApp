@@ -2,6 +2,8 @@ package com.compuasis.censoalumbradopublico.ui.home;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -19,6 +21,8 @@ import com.compuasis.censoalumbradopublico.adapters.CensosAdapter;
 import com.compuasis.censoalumbradopublico.entities.ECenso;
 import com.compuasis.censoalumbradopublico.tasks.TObtenerCensos;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.List;
 
 public class HomeFragment extends Fragment {
@@ -27,6 +31,19 @@ public class HomeFragment extends Fragment {
     RecyclerView rvCensos;
 
     HomeFragment fragment;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
+        super.onCreate( savedInstanceState );
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NotNull Menu menu, MenuInflater inflater) {
+
+        inflater.inflate(R.menu.lista_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {

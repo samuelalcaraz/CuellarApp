@@ -5,7 +5,11 @@ import android.annotation.SuppressLint;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
+import android.os.Looper;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -38,6 +42,15 @@ import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.textfield.TextInputEditText;
+
+import org.jetbrains.annotations.NotNull;
+
+import java.util.List;
+import java.util.Locale;
+
+import cn.pedant.SweetAlert.SweetAlertDialog;
+
+import static java.lang.Math.round;
 
 public class NotificationsFragment extends Fragment {
 

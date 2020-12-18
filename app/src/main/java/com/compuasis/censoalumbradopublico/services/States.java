@@ -24,6 +24,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -38,6 +39,8 @@ import okhttp3.Response;
          this.context = new WeakReference<>(context);
          this.fragment = fragment;
      }
+
+
 
      @Override
      protected void onPostExecute(List<EEstado> s) {
@@ -64,6 +67,7 @@ import okhttp3.Response;
 
          } catch (IOException e) {
              Log.e("ObtenerEstados", e.getMessage());
+
              return  null;
          }
 

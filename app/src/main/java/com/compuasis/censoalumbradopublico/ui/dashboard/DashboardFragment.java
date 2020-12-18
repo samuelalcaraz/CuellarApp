@@ -1,5 +1,6 @@
 package com.compuasis.censoalumbradopublico.ui.dashboard;
 
+import android.app.VoiceInteractor;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -26,12 +27,14 @@ import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.compuasis.censoalumbradopublico.MainActivity;
 import com.compuasis.censoalumbradopublico.R;
 import com.compuasis.censoalumbradopublico.entities.ECenso;
 import com.compuasis.censoalumbradopublico.entities.EEstado;
 import com.compuasis.censoalumbradopublico.entities.EMunicipio;
 import com.compuasis.censoalumbradopublico.services.Cities;
 import com.compuasis.censoalumbradopublico.services.States;
+import com.compuasis.censoalumbradopublico.tasks.TActualizarCenso;
 import com.compuasis.censoalumbradopublico.tasks.TInsertarCenso;
 import com.compuasis.censoalumbradopublico.tasks.TInsertarEstado;
 import com.compuasis.censoalumbradopublico.tasks.TObtenerEstado;
@@ -43,6 +46,8 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class DashboardFragment extends Fragment implements MultipleChioceDialogFragment.onMultipleChioceListener {
 
@@ -57,6 +62,9 @@ public class DashboardFragment extends Fragment implements MultipleChioceDialogF
     TextInputEditText txtDivision, txtZona, txtAgencia, txtCalle, txtCalleMargen, txtManzana,
         txtEntreCalle1,  txtEntreCalle2, txtPoblacionColonia, txtLocalidad;
     CheckBox chkCalleMargenDerecha, chkCalleMargenIzquierda, chkCalleMargenCentro;
+
+    SweetAlertDialog pDialog = null;
+    boolean actualizar = false;
 
     public DashboardFragment() {
 
@@ -99,13 +107,70 @@ public class DashboardFragment extends Fragment implements MultipleChioceDialogF
         chkCalleMargenIzquierda = root.findViewById( R.id.chkCalleMargenIzquierda );
         chkCalleMargenCentro = root.findViewById( R.id.chkCalleMargenCentro );
 
-        btnGuardar = root.findViewById( R.id.btnGuardar );
+        new TObtenerEstado( this.getContext(), this.fragment ).execute(  );
+
+        return  root;
+    }
 
 
 
-        btnGuardar.setOnClickListener( new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+    @Override
+    public void onCreateOptionsMenu(@NotNull Menu menu, MenuInflater inflater) {
+        //inflate menu
+        inflater.inflate(R.menu.censo_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getTitle().toString()) {
+            case "Actualizar":
+                pDialog = new SweetAlertDialog(fragment.getContext(), SweetAlertDialog.PROGRESS_TYPE);
+
+                pDialog.setTitleText("Actualizando Estados y municipios");
+                pDialog.setCancelable(false);
+                pDialog.show();
+
+                new States(getContext(), fragment).execute( "https://alcaraz.mx/hosting/censoap/services/states.php" );
+                break;
+
+            case "Nuevo":
+                txtDivision.setText( "" );
+                txtZona.setText( "" );
+                txtAgencia.setText( "" );
+                txtCalle.setText( "" );
+                rgCalle.setSelected( false );
+                txtCalleMargen.setText( "" );
+                chkCalleMargenIzquierda.setChecked( false );
+                chkCalleMargenDerecha.setChecked( false );
+                chkCalleMargenCentro.setChecked( false );
+                txtManzana.setText( "" );
+                rgTension.setSelected( false );
+                txtEntreCalle1.setText( "" );
+                txtEntreCalle2.setText( "" );
+                txtPoblacionColonia.setText( "" );
+                txtLocalidad.setText( "" );
+                break;
+
+            case "Guardar":
+                if(spEstados.getSelectedItem() == null) {
+                    new SweetAlertDialog( fragment.getContext(), SweetAlertDialog.ERROR_TYPE).setTitleText("Debe seleccionar un estado").show();
+                    break;
+                }
+                if(spMunicipios.getSelectedItem() == null) {
+                    new SweetAlertDialog( fragment.getContext(), SweetAlertDialog.ERROR_TYPE).setTitleText("Debe seleccionar un municipio").show();
+                    break;
+                }
+                if(rgCalle.getCheckedRadioButtonId() == -1) {
+                    new SweetAlertDialog( fragment.getContext(), SweetAlertDialog.ERROR_TYPE).setTitleText("Debe seleccionar un tipo de calle").show();
+                    break;
+                }
+                if(rgTension.getCheckedRadioButtonId() == -1) {
+                    new SweetAlertDialog( fragment.getContext(), SweetAlertDialog.ERROR_TYPE).setTitleText("Debe seleccionar una tensión").show();
+                    break;
+                }
+
 
                 ECenso censo = new ECenso();
                 EMunicipio municipio = (EMunicipio) spMunicipios.getSelectedItem();
@@ -126,49 +191,19 @@ public class DashboardFragment extends Fragment implements MultipleChioceDialogF
                 censo.PoblacionColonia = txtPoblacionColonia.getText().toString();
                 censo.Localidad = txtLocalidad.getText().toString();
 
-                new TInsertarCenso( fragment.getContext() ).execute( censo );
-
-            }
-        } );
-
-
-
-
+                if(!actualizar) {
+                    new TInsertarCenso( fragment.getContext() ).execute( censo );
+                    actualizar = true;
+                } else {
+                    new TActualizarCenso( fragment.getContext() ).execute( censo );
+                }
 
 
 
 
 
-
-        new TObtenerEstado( this.getContext(), this.fragment ).execute(  );
-
-
-
-
-
-        return  root;
-    }
-
-
-
-    @Override
-    public void onCreateOptionsMenu(@NotNull Menu menu, MenuInflater inflater) {
-        //inflate menu
-        inflater.inflate(R.menu.censo_menu, menu);
-        super.onCreateOptionsMenu(menu, inflater);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        //handle menu item clicks
-        int id = item.getItemId();
-
-        if (id == R.id.action_actualizar) {
-
-             new States(getContext(), fragment).execute( "https://alcaraz.mx/hosting/censoap/services/states.php" );
-
-            Toast.makeText(getActivity(), "Actualizando Estados y municipios", Toast.LENGTH_LONG).show();
         }
+
 
 
         return super.onOptionsItemSelected(item);
@@ -191,8 +226,14 @@ public class DashboardFragment extends Fragment implements MultipleChioceDialogF
         spEstados.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+
                 EEstado state = (EEstado) parent.getSelectedItem();
-                new TObtenerMunicipio( getContext(), (DashboardFragment) fragment, state.IdEstado ).execute(  );
+                new TObtenerMunicipio( getContext(), fragment, state.IdEstado ).execute();
+
+                if (pDialog != null) {
+                    pDialog.cancel();
+                }
 
             }
             @Override

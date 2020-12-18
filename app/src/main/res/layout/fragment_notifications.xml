@@ -7,4 +7,376 @@
     tools:context=".ui.notifications.NotificationsFragment">
 
 
+
+    <TextView
+        android:id="@+id/tvCenso"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Censo"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="4dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="4dp"/>
+
+    <Spinner
+        android:id="@+id/spCensos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="4dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvCenso" />
+
+    <TextView
+        android:id="@+id/tvCondicionPoste"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Condición"
+        app:layout_constraintTop_toBottomOf="@id/spCensos"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="4dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="4dp"/>
+
+    <CheckBox
+        android:id="@+id/chkCondicionPoste"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Buena"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvCondicionPoste"
+        android:layout_marginStart="8dp"
+        android:paddingEnd="4dp"
+        />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilIdPoste"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintStart_toEndOf="@id/chkCondicionPoste"
+        app:layout_constraintTop_toBottomOf="@id/spCensos"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="4dp">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/txtIdPoste"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/id_poste"
+            android:maxLength="20"
+            android:singleLine="true" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/tvTipoPoste"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Tipo poste"
+        app:layout_constraintTop_toBottomOf="@id/tilIdPoste"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintWidth_percent="0.5"
+        android:layout_marginTop="4dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="4dp"/>
+    <TextView
+        android:id="@+id/tvTipoCarcasa"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Tipo carcasa"
+        app:layout_constraintTop_toBottomOf="@id/tilIdPoste"
+        app:layout_constraintStart_toEndOf="@id/tvTipoPoste"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="4dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="4dp"/>
+
+    <Spinner
+        android:id="@+id/spTipoPoste"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="4dp"
+        app:layout_constraintWidth_percent="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvTipoPoste" />
+
+    <Spinner
+        android:id="@+id/spTipoCarcasa"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="4dp"
+        app:layout_constraintStart_toEndOf="@id/spTipoPoste"
+        app:layout_constraintTop_toBottomOf="@id/tvTipoCarcasa"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
+        android:id="@+id/tvCondicionLampara1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="12dp"
+        android:text="Condición"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/spTipoPoste" />
+
+    <CheckBox
+        android:id="@+id/chkCondicionLampara1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Buena"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvCondicionLampara1"
+        android:layout_marginStart="4dp"
+        android:paddingEnd="4dp"
+        />
+
+    <TextView
+        android:id="@+id/tvTipoLampara1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Tipo lámpara"
+        app:layout_constraintWidth_percent="0.30"
+        app:layout_constraintTop_toBottomOf="@id/spTipoPoste"
+        app:layout_constraintStart_toEndOf="@id/chkCondicionLampara1"
+
+        android:layout_marginTop="12dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="4dp"/>
+
+    <Spinner
+        android:id="@+id/spTipoLampra1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="4dp"
+        app:layout_constraintWidth_percent="0.30"
+        app:layout_constraintStart_toEndOf="@id/chkCondicionLampara1"
+        app:layout_constraintTop_toBottomOf="@id/tvTipoLampara1"
+        />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilCantidad1"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/spTipoLampra1"
+        app:layout_constraintTop_toBottomOf="@id/spTipoPoste"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="4dp">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/txtCantidad1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/cantidad_hint"
+            android:maxLength="2"
+            android:singleLine="true" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilWatts1"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/tilCantidad1"
+        app:layout_constraintTop_toBottomOf="@id/spTipoPoste"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="4dp">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/txtWatts1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/watts_hint"
+            android:maxLength="2"
+            android:singleLine="true" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilCarga1"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/tilWatts1"
+        app:layout_constraintTop_toBottomOf="@id/spTipoPoste"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="4dp">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/txtCarga1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/carga_hint"
+
+            android:maxLength="2"
+            android:singleLine="true" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <TextView
+        android:id="@+id/tvCondicionLampara2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="12dp"
+        android:text="Condición"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/chkCondicionLampara1" />
+
+    <CheckBox
+        android:id="@+id/chkCondicionLampara2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Buena"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvCondicionLampara2"
+        android:layout_marginStart="4dp"
+        android:paddingEnd="4dp"
+        />
+
+    <TextView
+        android:id="@+id/tvTipoLampara2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Tipo lámpara"
+        app:layout_constraintWidth_percent="0.30"
+        app:layout_constraintTop_toBottomOf="@id/chkCondicionLampara1"
+        app:layout_constraintStart_toEndOf="@id/chkCondicionLampara1"
+
+        android:layout_marginTop="12dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="4dp"/>
+
+    <Spinner
+        android:id="@+id/spTipoLampra2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="4dp"
+        app:layout_constraintWidth_percent="0.30"
+        app:layout_constraintStart_toEndOf="@id/chkCondicionLampara2"
+        app:layout_constraintTop_toBottomOf="@id/tvTipoLampara2"
+        />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilCantidad2"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/spTipoLampra2"
+        app:layout_constraintTop_toBottomOf="@id/chkCondicionLampara1"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="4dp">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/txtCantidad2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/cantidad_hint"
+            android:maxLength="2"
+            android:singleLine="true" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilWatts2"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/tilCantidad2"
+        app:layout_constraintTop_toBottomOf="@id/chkCondicionLampara1"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="4dp">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/txtWatts2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/watts_hint"
+            android:maxLength="2"
+            android:singleLine="true" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilCarga2"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/tilWatts2"
+        app:layout_constraintTop_toBottomOf="@id/chkCondicionLampara1"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="4dp">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/txtCarga2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/carga_hint"
+
+            android:maxLength="2"
+            android:singleLine="true" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilEquipoAux"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/chkCondicionLampara2"
+        app:layout_constraintWidth_percent="0.3"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="4dp">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/txtEquipoAux"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/equipo_aux"
+            android:maxLength="20"
+            android:singleLine="true" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilGeoX"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/tilEquipoAux"
+        app:layout_constraintTop_toBottomOf="@id/chkCondicionLampara2"
+        app:layout_constraintWidth_percent="0.3"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="4dp">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/txtGeoX"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Geo X"
+            android:maxLength="20"
+            android:enabled="false"
+            android:singleLine="true" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilGeoY"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/tilGeoX"
+        app:layout_constraintTop_toBottomOf="@id/chkCondicionLampara2"
+        app:layout_constraintWidth_percent="0.3"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="4dp">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/txtGeoY"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Geo Y"
+            android:maxLength="20"
+            android:enabled="false"
+            android:singleLine="true" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="350dp"
+        android:src="@mipmap/ic_launcher_foreground"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tilGeoX"
+         />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

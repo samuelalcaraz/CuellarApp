@@ -67,7 +67,6 @@ public class CensosAdapter extends
             tvEstadoMunicipio = itemView.findViewById( R.id.tvEstadoMunicipio);
             tvDivisionZonaAgencia= itemView.findViewById( R.id.tvDivisionZonaAgencia);
             tvCalle= itemView.findViewById( R.id.tvCalle);
-            btnAnadirPoste = (Button) itemView.findViewById(R.id.btnAnadirPoste);
         }
     }
 }
