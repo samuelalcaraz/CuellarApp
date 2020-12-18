@@ -1,14 +1,21 @@
 package com.compuasis.censoalumbradopublico.ui.notifications;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -24,6 +31,13 @@ import com.compuasis.censoalumbradopublico.tasks.TObtenerCensosCombo;
 import com.compuasis.censoalumbradopublico.tasks.TObtenerTipoCarcasa;
 import com.compuasis.censoalumbradopublico.tasks.TObtenerTipoLampara;
 import com.compuasis.censoalumbradopublico.tasks.TObtenerTipoPoste;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.textfield.TextInputEditText;
 
 public class NotificationsFragment extends Fragment {
 
@@ -31,9 +45,18 @@ public class NotificationsFragment extends Fragment {
 
     Spinner spCensos, spTipoPoste, spTipoCarcasa, spTipoLampara1, spTipoLampara2;
 
+    TextInputEditText txtGeoX, txtGeoY;
+
     NotificationsFragment fragment;
 
     SweetAlertDialog pDialog = null;
+
+    private FusedLocationProviderClient fusedLocationClient;
+
+    public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
+
+    private LocationRequest locationRequest;
+    private LocationCallback locationCallback;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -49,15 +72,104 @@ public class NotificationsFragment extends Fragment {
         spTipoLampara1 = root.findViewById( R.id.spTipoLampra1 );
         spTipoLampara2 = root.findViewById( R.id.spTipoLampra2 );
 
-        new TObtenerCensosCombo( this.getContext(), fragment ).execute(  );
-        new TObtenerTipoPoste( this.getContext(), this.fragment ).execute(  );
-        new TObtenerTipoCarcasa( this.getContext(), this.fragment ).execute(  );
-        new TObtenerTipoLampara( this.getContext(), this.fragment ).execute(  );
+        txtGeoX = root.findViewById( R.id.txtGeoX );
+        txtGeoY = root.findViewById( R.id.txtGeoY );
+
+        new TObtenerCensosCombo( this.getContext(), fragment ).execute();
+        new TObtenerTipoPoste( this.getContext(), this.fragment ).execute();
+        new TObtenerTipoCarcasa( this.getContext(), this.fragment ).execute();
+        new TObtenerTipoLampara( this.getContext(), this.fragment ).execute();
+
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient( this.getContext() );
+
+        if (ActivityCompat.checkSelfPermission( this.getContext(), Manifest.permission.ACCESS_FINE_LOCATION ) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission( this.getContext(), Manifest.permission.ACCESS_COARSE_LOCATION ) != PackageManager.PERMISSION_GRANTED) {
+
+
+            ActivityCompat.requestPermissions(getActivity(),
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, MY_PERMISSIONS_REQUEST_LOCATION);
+
+        } else {
+            ActivityCompat.requestPermissions(getActivity(),
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+        }
+
+
+
+        fusedLocationClient.getLastLocation()
+                .addOnSuccessListener( this.getActivity(), new OnSuccessListener<Location>() {
+                    @Override
+                    public void onSuccess(Location location) {
+                        if (location != null) {
+                            double x = location.getLatitude();
+                            double y = location.getLongitude();
+                            txtGeoX.setText( String.format(Locale.US,"%.6f", x) );
+                            txtGeoY.setText( String.format(Locale.US,"%.6f", y) );
+                        } else {
+                            txtGeoX.setText( "" );
+                            txtGeoY.setText( "" );
+                        }
+                    }
+                } );
+
+        locationRequest = LocationRequest.create();
+        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        locationRequest.setInterval(250); // 1 segundo
+
+
+        locationCallback = new LocationCallback() {
+            @Override
+            public void onLocationResult(LocationResult locationResult) {
+                if (locationResult == null) {
+                    Toast.makeText( fragment.getContext(), "Si ubicación", Toast.LENGTH_SHORT ).show();
+                    return;
+                }
+                for (Location location : locationResult.getLocations()) {
+                    if (location != null) {
+                        double x = location.getLatitude();
+                        double y = location.getLongitude();
+                        double a = location.getAccuracy();
+                        txtGeoX.setText( String.format(Locale.US, "%.6f", x ) );
+                        txtGeoY.setText( String.format(Locale.US, "%.6f", y ) );
+
+                        Toast.makeText( fragment.getContext(), "Precisión: " + String.format(Locale.US, "%.2f", a ) + " metros", Toast.LENGTH_SHORT ).show();
+                        fusedLocationClient.removeLocationUpdates(locationCallback);
+                    } else {
+                        Toast.makeText( fragment.getContext(), "Si ubicación", Toast.LENGTH_SHORT ).show();
+                    }
+                }
+            }
+        };
+
 
         return root;
 
 
     }
+
+    public void ObtenerUltimaLocalizacion() {
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                                           int[] grantResults){
+        switch (requestCode){
+            case 1: {
+                if (grantResults.length>0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                    if (ContextCompat.checkSelfPermission(getActivity(),
+                            Manifest.permission.ACCESS_FINE_LOCATION)==PackageManager.PERMISSION_GRANTED){
+                        Toast.makeText(getContext(), "Permission Granted", Toast.LENGTH_SHORT).show();
+                    }
+                }else{
+                    Toast.makeText(getContext(), "Permission Denied", Toast.LENGTH_SHORT).show();
+                }
+                return;
+            }
+        }
+    }
+
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -70,6 +182,7 @@ public class NotificationsFragment extends Fragment {
         super.onCreateOptionsMenu(menu, inflater);
     }
 
+    @SuppressLint("MissingPermission")
     public boolean onOptionsItemSelected(MenuItem item) {
 
         switch (item.getTitle().toString()) {
@@ -83,6 +196,11 @@ public class NotificationsFragment extends Fragment {
                 new TipoPoste(getContext(), fragment).execute();
                 new TipoCarcasa( getContext(), fragment).execute();
                 new TipoLampara( getContext(), fragment).execute();
+                break;
+
+            case "GPS":
+                fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, Looper.myLooper());
+
                 break;
 
             case "Nuevo":

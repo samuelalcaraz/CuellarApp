@@ -27,7 +27,14 @@
     <string name="poblacion_o_colonia">Poblacion o colonia</string>
     <string name="localidad">Localidad</string>
     <string name="guardar">Guardar</string>
-    <string name="actualizar_estados">Actualizar estados</string>
+    <string name="id_poste">ID Poste</string>
+    <string name="cantidad">Cantidad</string>
+    <string name="cantidad_hint"><font size="35">Cantidad</font></string>
+    <string name="watts_hint"><font size="35">Watts</font></string>
+    <string name="carga_hint"><font size="35">Carga</font></string>
+    <string name="equipo_aux">Equipo Aux</string>
+    <string name="actualizar_ubicaci_n">Actualizar ubicación</string>
+    <string name="gps">GPS</string>
     <string-array name="calleMargen">
         <item>Derecha</item>
         <item>Izquierda</item>
