@@ -12,14 +12,16 @@ import com.compuasis.censoalumbradopublico.entities.ECenso;
 import com.compuasis.censoalumbradopublico.entities.EEstado;
 import com.compuasis.censoalumbradopublico.entities.EMunicipio;
 import com.compuasis.censoalumbradopublico.entities.EPoste;
+import com.compuasis.censoalumbradopublico.entities.ETipoPoste;
 
 @Database(entities =
         {
                 EEstado.class,
                 EMunicipio.class,
                 ECenso.class,
-                EPoste.class
-        }, version = 6)
+                EPoste.class,
+                ETipoPoste.class
+        }, version = 7)
 public abstract class database extends RoomDatabase {
 
     public abstract DEstado dEstado();
@@ -29,6 +31,8 @@ public abstract class database extends RoomDatabase {
     public abstract  DCenso dCenso();
 
     public abstract DPoste DPoste();
+
+    public abstract DTipoPoste dTipoPoste();
 
     private static volatile database INSTANCE;
 
