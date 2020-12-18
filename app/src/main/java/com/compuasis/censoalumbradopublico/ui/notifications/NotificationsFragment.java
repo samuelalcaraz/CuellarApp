@@ -13,12 +13,14 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.compuasis.censoalumbradopublico.R;
+import com.compuasis.censoalumbradopublico.entities.ECenso;
 import com.compuasis.censoalumbradopublico.entities.ETipoCarcasa;
 import com.compuasis.censoalumbradopublico.entities.ETipoLampara;
 import com.compuasis.censoalumbradopublico.entities.ETipoPoste;
 import com.compuasis.censoalumbradopublico.services.TipoCarcasa;
 import com.compuasis.censoalumbradopublico.services.TipoLampara;
 import com.compuasis.censoalumbradopublico.services.TipoPoste;
+import com.compuasis.censoalumbradopublico.tasks.TObtenerCensosCombo;
 import com.compuasis.censoalumbradopublico.tasks.TObtenerTipoCarcasa;
 import com.compuasis.censoalumbradopublico.tasks.TObtenerTipoLampara;
 import com.compuasis.censoalumbradopublico.tasks.TObtenerTipoPoste;
@@ -27,7 +29,7 @@ public class NotificationsFragment extends Fragment {
 
     private NotificationsViewModel notificationsViewModel;
 
-    Spinner spTipoPoste, spTipoCarcasa, spTipoLampara1, spTipoLampara2;
+    Spinner spCensos, spTipoPoste, spTipoCarcasa, spTipoLampara1, spTipoLampara2;
 
     NotificationsFragment fragment;
 
@@ -41,11 +43,13 @@ public class NotificationsFragment extends Fragment {
                 ViewModelProviders.of( this ).get( NotificationsViewModel.class );
         View root = inflater.inflate( R.layout.fragment_notifications, container, false );
 
+        spCensos = root.findViewById( R.id.spCensos );
         spTipoPoste = root.findViewById( R.id.spTipoPoste );
         spTipoCarcasa = root.findViewById( R.id.spTipoCarcasa );
         spTipoLampara1 = root.findViewById( R.id.spTipoLampra1 );
         spTipoLampara2 = root.findViewById( R.id.spTipoLampra2 );
 
+        new TObtenerCensosCombo( this.getContext(), fragment ).execute(  );
         new TObtenerTipoPoste( this.getContext(), this.fragment ).execute(  );
         new TObtenerTipoCarcasa( this.getContext(), this.fragment ).execute(  );
         new TObtenerTipoLampara( this.getContext(), this.fragment ).execute(  );
@@ -192,6 +196,17 @@ public class NotificationsFragment extends Fragment {
         if(pDialog != null) {
             pDialog.cancel();
         }
+
+    }
+
+    public void fillCensos(List<ECenso> list){
+
+        ArrayAdapter<ECenso> adapter = new ArrayAdapter<>( getContext(),
+                android.R.layout.simple_spinner_item, list );
+
+        adapter.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item);
+
+        spCensos.setAdapter( adapter );
 
     }
 }

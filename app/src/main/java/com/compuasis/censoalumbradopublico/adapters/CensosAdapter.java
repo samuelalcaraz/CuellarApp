@@ -1,5 +1,6 @@
 package com.compuasis.censoalumbradopublico.adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,12 +38,13 @@ public class CensosAdapter extends
         return new ViewHolder(contactView);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(CensosAdapter.ViewHolder holder, int position) {
 
         ECenso censo = mCensos.get(position);
 
-        holder.tvEstadoMunicipio.setText( censo.getEstadoMunicipio() );
+        holder.tvEstadoMunicipio.setText( "[" + censo.IdCenso + "] " + censo.getEstadoMunicipio() );
         holder.tvDivisionZonaAgencia.setText( censo.getDivisionZonaAgencia() );
         holder.tvCalle.setText( censo.Calle );
 

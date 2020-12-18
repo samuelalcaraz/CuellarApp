@@ -58,6 +58,6 @@ public class ECenso {
     @NotNull
     @Override
     public String toString() {
-        return String.valueOf( IdCenso );
+        return "[" + IdCenso + "] " + Calle;
     }
 }
