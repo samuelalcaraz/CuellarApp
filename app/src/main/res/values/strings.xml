@@ -39,6 +39,7 @@
     <string name="actualizar_ubicaci_n">Actualizar ubicación</string>
     <string name="gps">GPS</string>
     <string name="postes">Postes</string>
+    <string name="upload">Upload</string>
     <string-array name="calleMargen">
         <item>Derecha</item>
         <item>Izquierda</item>

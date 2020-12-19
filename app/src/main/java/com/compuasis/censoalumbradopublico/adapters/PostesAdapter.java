@@ -5,14 +5,12 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.compuasis.censoalumbradopublico.R;
 import com.compuasis.censoalumbradopublico.entities.EPoste;
-import com.compuasis.censoalumbradopublico.entities.ETipoPoste;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -47,8 +45,8 @@ public class PostesAdapter extends
         EPoste data = mPostes.get(position);
 
         holder.tvLinea1.setText( String.valueOf( data.ID ) );
-        holder.tvLinea2.setText( "Cantidad: " + data.Cantidad1 + "   Watts: " + data.WhatssLampara1 + "   Carga: " + data.CargaWatts1 );
-        holder.tvLinea3.setText( "Cantidad: " + data.Cantidad2 + "   Watts: " + data.WhatssLampara2 + "   Carga: " + data.CargaWatts2 );
+        holder.tvLinea2.setText( "Cantidad: " + data.Cantidad1 + "   Watts: " + data.Watts1 + "   Carga: " + data.CargaWatts1 );
+        holder.tvLinea3.setText( "Cantidad: " + data.Cantidad2 + "   Watts: " + data.Watts2 + "   Carga: " + data.CargaWatts2 );
 
     }
 

@@ -7,6 +7,8 @@ import com.compuasis.censoalumbradopublico.data.DCenso;
 import com.compuasis.censoalumbradopublico.data.database;
 import com.compuasis.censoalumbradopublico.entities.ECenso;
 
+import org.jetbrains.annotations.Nullable;
+
 import java.lang.ref.WeakReference;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
@@ -15,7 +17,7 @@ public class TActualizarCenso extends AsyncTask<ECenso, Void, Void> {
 
 private final WeakReference<Context> context;
 
-    public TActualizarCenso(Context context)
+    public TActualizarCenso(@Nullable Context context)
     {
         this.context = new WeakReference<>(context);
     }

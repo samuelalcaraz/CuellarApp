@@ -11,6 +11,8 @@ public class ECenso {
     @PrimaryKey(autoGenerate = true)
     public int IdCenso;
 
+    public String Uuid;
+
     public int IdMunicipio;
 
     public String Division;

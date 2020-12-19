@@ -9,6 +9,8 @@ import com.compuasis.censoalumbradopublico.data.database;
 import com.compuasis.censoalumbradopublico.entities.ECenso;
 import com.compuasis.censoalumbradopublico.entities.EEstado;
 
+import org.jetbrains.annotations.Nullable;
+
 import java.lang.ref.WeakReference;
 import java.util.List;
 
@@ -18,7 +20,7 @@ public class TInsertarCenso extends AsyncTask<ECenso, Void, Void> {
 
 private final WeakReference<Context> context;
 
-    public TInsertarCenso(Context context)
+    public TInsertarCenso(@Nullable Context context)
     {
         this.context = new WeakReference<>(context);
     }

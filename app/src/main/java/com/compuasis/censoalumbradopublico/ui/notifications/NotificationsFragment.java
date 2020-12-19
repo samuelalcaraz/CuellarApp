@@ -28,7 +28,6 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProviders;
 
 import com.compuasis.censoalumbradopublico.R;
 import com.compuasis.censoalumbradopublico.entities.ECenso;
@@ -58,15 +57,13 @@ import org.jetbrains.annotations.NotNull;
 import java.io.ByteArrayOutputStream;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
 import static android.app.Activity.RESULT_OK;
-import static java.lang.Math.round;
 
 public class NotificationsFragment extends Fragment {
-
-    private NotificationsViewModel notificationsViewModel;
 
     Spinner spCensos, spTipoPoste, spTipoCarcasa, spTipoLampara1, spTipoLampara2;
 
@@ -113,8 +110,6 @@ public class NotificationsFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
 
         this.fragment = this;
-        notificationsViewModel =
-                ViewModelProviders.of( this ).get( NotificationsViewModel.class );
         View root = inflater.inflate( R.layout.fragment_notifications, container, false );
 
         spCensos = root.findViewById( R.id.spCensos );
@@ -147,23 +142,28 @@ public class NotificationsFragment extends Fragment {
             }
         } );
 
-        new TObtenerCensosCombo( this.getContext(), fragment ).execute();
-        new TObtenerTipoPoste( this.getContext(), this.fragment ).execute();
-        new TObtenerTipoCarcasa( this.getContext(), this.fragment ).execute();
-        new TObtenerTipoLampara( this.getContext(), this.fragment ).execute();
+
+        if(getContext() != null) {
+            new TObtenerCensosCombo( this.getContext(), fragment ).execute();
+            new TObtenerTipoPoste( this.getContext(), this.fragment ).execute();
+            new TObtenerTipoCarcasa( this.getContext(), this.fragment ).execute();
+            new TObtenerTipoLampara( this.getContext(), this.fragment ).execute();
+        }
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient( this.getContext() );
 
-        if (ActivityCompat.checkSelfPermission( this.getContext(), Manifest.permission.ACCESS_FINE_LOCATION ) != PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission( this.getContext(), Manifest.permission.ACCESS_COARSE_LOCATION ) != PackageManager.PERMISSION_GRANTED) {
+        if(getActivity() != null) {
+            if (ActivityCompat.checkSelfPermission( this.getContext(), Manifest.permission.ACCESS_FINE_LOCATION ) != PackageManager.PERMISSION_GRANTED
+                    && ActivityCompat.checkSelfPermission( this.getContext(), Manifest.permission.ACCESS_COARSE_LOCATION ) != PackageManager.PERMISSION_GRANTED) {
 
 
-            ActivityCompat.requestPermissions(getActivity(),
-                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, MY_PERMISSIONS_REQUEST_LOCATION);
+                ActivityCompat.requestPermissions( getActivity(),
+                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, MY_PERMISSIONS_REQUEST_LOCATION );
 
-        } else {
-            ActivityCompat.requestPermissions(getActivity(),
-                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+            } else {
+                ActivityCompat.requestPermissions( getActivity(),
+                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1 );
+            }
         }
 
 
@@ -219,28 +219,22 @@ public class NotificationsFragment extends Fragment {
 
     }
 
-    public void ObtenerUltimaLocalizacion() {
 
-    }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                                           int[] grantResults){
-        switch (requestCode){
-            case 1: {
-                if (grantResults.length>0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-                    if (ContextCompat.checkSelfPermission(getActivity(),
-                            Manifest.permission.ACCESS_FINE_LOCATION)==PackageManager.PERMISSION_GRANTED){
-                        Toast.makeText(getContext(), "Permission Granted", Toast.LENGTH_SHORT).show();
-                    }
-                }else{
-                    Toast.makeText(getContext(), "Permission Denied", Toast.LENGTH_SHORT).show();
+    public void onRequestPermissionsResult(int requestCode, @NotNull String[] permissions,
+                                           @NotNull int[] grantResults){
+        if (requestCode == 1) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                if (ContextCompat.checkSelfPermission( getActivity(),
+                        Manifest.permission.ACCESS_FINE_LOCATION ) == PackageManager.PERMISSION_GRANTED) {
+                    Toast.makeText( getContext(), "Permisos concedidos", Toast.LENGTH_SHORT ).show();
                 }
-                return;
+            } else {
+                Toast.makeText( getContext(), "Permisos denegados", Toast.LENGTH_SHORT ).show();
             }
         }
     }
-
 
 
     @Override
@@ -265,9 +259,11 @@ public class NotificationsFragment extends Fragment {
                 pDialog.setCancelable(false);
                 pDialog.show();
 
-                new TipoPoste(getContext(), fragment).execute();
-                new TipoCarcasa( getContext(), fragment).execute();
-                new TipoLampara( getContext(), fragment).execute();
+                if(getContext() != null) {
+                    new TipoPoste( getContext(), fragment ).execute();
+                    new TipoCarcasa( getContext(), fragment ).execute();
+                    new TipoLampara( getContext(), fragment ).execute();
+                }
                 break;
 
             case "GPS":
@@ -338,7 +334,7 @@ public class NotificationsFragment extends Fragment {
 
                 poste.CondicionPoste = chkCondicionPoste.isChecked();
 
-                poste.ID = txtIdPoste.getText().toString();
+                poste.ID = Objects.requireNonNull( txtIdPoste.getText() ).toString();
 
                 poste.IdTipoPoste = ((ETipoPoste) spTipoPoste.getSelectedItem()).IdTipoPoste;
 
@@ -348,19 +344,19 @@ public class NotificationsFragment extends Fragment {
 
                 poste.IdTipoLampara1 = ((ETipoLampara) spTipoLampara1.getSelectedItem()).IdTipoLampara;
 
-                poste.Cantidad1 = Integer.parseInt( "0" + txtCantidad1.getText().toString() );
+                poste.Cantidad1 = Integer.parseInt( "0" + Objects.requireNonNull( txtCantidad1.getText() ).toString() );
 
-                poste.WhatssLampara1 = Integer.parseInt( "0" + txtWatts1.getText().toString() );
+                poste.Watts1 = Integer.parseInt( "0" + Objects.requireNonNull( txtWatts1.getText() ).toString() );
 
-                poste.CargaWatts1 = Integer.parseInt( "0" + txtCarga1.getText().toString() );
+                poste.CargaWatts1 = Integer.parseInt( "0" + Objects.requireNonNull( txtCarga1.getText() ).toString() );
 
                 poste.CondicionLampara2 = chkCondicionLampara2.isChecked();
 
                 poste.IdTipoLampara2 = ((ETipoLampara) spTipoLampara2.getSelectedItem()).IdTipoLampara;
 
-                poste.Cantidad2 = Integer.parseInt( "0" + txtCantidad2.getText().toString() );
+                poste.Cantidad2 = Integer.parseInt( "0" + Objects.requireNonNull( txtCantidad2.getText() ).toString() );
 
-                poste.WhatssLampara2 = Integer.parseInt( "0" + txtWatts2.getText().toString() );
+                poste.Watts2 = Integer.parseInt( "0" + txtWatts2.getText().toString() );
 
                 poste.CargaWatts2 = Integer.parseInt( "0" + txtCarga2.getText().toString() );
 

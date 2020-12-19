@@ -1,7 +1,6 @@
 package com.compuasis.censoalumbradopublico.entities;
 
 import androidx.annotation.NonNull;
-import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -27,7 +26,7 @@ public class EPoste {
 
     public int Cantidad1;
 
-    public int WhatssLampara1;
+    public int Watts1;
 
     public int CargaWatts1;
 
@@ -37,7 +36,7 @@ public class EPoste {
 
     public int Cantidad2;
 
-    public int WhatssLampara2;
+    public int Watts2;
 
     public int CargaWatts2;
 

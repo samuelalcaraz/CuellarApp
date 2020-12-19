@@ -25,7 +25,7 @@ import com.compuasis.censoalumbradopublico.entities.ETipoPoste;
                 ETipoPoste.class,
                 ETipoCarcasa.class,
                 ETipoLampara.class
-        }, version = 9)
+        }, version = 10)
 public abstract class database extends RoomDatabase {
 
     public abstract DEstado dEstado();
