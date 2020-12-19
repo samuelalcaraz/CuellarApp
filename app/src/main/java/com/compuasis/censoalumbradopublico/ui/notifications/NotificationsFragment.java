@@ -6,6 +6,7 @@ import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Looper;
@@ -17,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -30,12 +32,15 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.compuasis.censoalumbradopublico.R;
 import com.compuasis.censoalumbradopublico.entities.ECenso;
+import com.compuasis.censoalumbradopublico.entities.EPoste;
 import com.compuasis.censoalumbradopublico.entities.ETipoCarcasa;
 import com.compuasis.censoalumbradopublico.entities.ETipoLampara;
 import com.compuasis.censoalumbradopublico.entities.ETipoPoste;
 import com.compuasis.censoalumbradopublico.services.TipoCarcasa;
 import com.compuasis.censoalumbradopublico.services.TipoLampara;
 import com.compuasis.censoalumbradopublico.services.TipoPoste;
+import com.compuasis.censoalumbradopublico.tasks.TActualizarPoste;
+import com.compuasis.censoalumbradopublico.tasks.TInsertarPoste;
 import com.compuasis.censoalumbradopublico.tasks.TObtenerCensosCombo;
 import com.compuasis.censoalumbradopublico.tasks.TObtenerTipoCarcasa;
 import com.compuasis.censoalumbradopublico.tasks.TObtenerTipoLampara;
@@ -50,6 +55,7 @@ import com.google.android.material.textfield.TextInputEditText;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.io.ByteArrayOutputStream;
 import java.util.List;
 import java.util.Locale;
 
@@ -64,13 +70,16 @@ public class NotificationsFragment extends Fragment {
 
     Spinner spCensos, spTipoPoste, spTipoCarcasa, spTipoLampara1, spTipoLampara2;
 
-    TextInputEditText txtGeoX, txtGeoY;
+    TextInputEditText txtIdPoste, txtCantidad1, txtWatts1, txtCarga1, txtCantidad2, txtWatts2, txtCarga2, txtEquipoAux, txtGeoX, txtGeoY;
+
+    CheckBox chkCondicionPoste, chkCondicionLampara1, chkCondicionLampara2;
 
     ImageView ivFoto;
 
     NotificationsFragment fragment;
 
     SweetAlertDialog pDialog = null;
+
 
     private FusedLocationProviderClient fusedLocationClient;
 
@@ -79,6 +88,8 @@ public class NotificationsFragment extends Fragment {
 
     private LocationRequest locationRequest;
     private LocationCallback locationCallback;
+
+    boolean actualizar = false;
 
     private void dispatchTakePictureIntent() {
         Intent takePictureIntent = new Intent( MediaStore.ACTION_IMAGE_CAPTURE);
@@ -112,8 +123,20 @@ public class NotificationsFragment extends Fragment {
         spTipoLampara1 = root.findViewById( R.id.spTipoLampra1 );
         spTipoLampara2 = root.findViewById( R.id.spTipoLampra2 );
 
+        txtIdPoste = root.findViewById( R.id.txtIdPoste );
+        txtCantidad1 = root.findViewById( R.id.txtCantidad1 );
+        txtWatts1 = root.findViewById( R.id.txtWatts1 );
+        txtCarga1 = root.findViewById( R.id.txtCarga1 );
+        txtCantidad2 = root.findViewById( R.id.txtCantidad2 );
+        txtWatts2 = root.findViewById( R.id.txtWatts2 );
+        txtCarga2 = root.findViewById( R.id.txtCarga2 );
+        txtEquipoAux = root.findViewById( R.id.txtEquipoAux );
         txtGeoX = root.findViewById( R.id.txtGeoX );
         txtGeoY = root.findViewById( R.id.txtGeoY );
+
+        chkCondicionPoste = root.findViewById( R.id.chkCondicionPoste );
+        chkCondicionLampara1 = root.findViewById( R.id.chkCondicionLampara1 );
+        chkCondicionLampara2 = root.findViewById( R.id.chkCondicionLampara2 );
 
         ivFoto = root.findViewById( R.id.ivFoto );
 
@@ -231,7 +254,7 @@ public class NotificationsFragment extends Fragment {
         super.onCreateOptionsMenu(menu, inflater);
     }
 
-    @SuppressLint("MissingPermission")
+    @SuppressLint({"MissingPermission", "WrongThread"})
     public boolean onOptionsItemSelected(MenuItem item) {
 
         switch (item.getTitle().toString()) {
@@ -253,68 +276,116 @@ public class NotificationsFragment extends Fragment {
                 break;
 
             case "Nuevo":
-              /*  txtDivision.setText( "" );
-                txtZona.setText( "" );
-                txtAgencia.setText( "" );
-                txtCalle.setText( "" );
-                rgCalle.setSelected( false );
-                txtCalleMargen.setText( "" );
-                chkCalleMargenIzquierda.setChecked( false );
-                chkCalleMargenDerecha.setChecked( false );
-                chkCalleMargenCentro.setChecked( false );
-                txtManzana.setText( "" );
-                rgTension.setSelected( false );
-                txtEntreCalle1.setText( "" );
-                txtEntreCalle2.setText( "" );
-                txtPoblacionColonia.setText( "" );
-                txtLocalidad.setText( "" );*/
+                txtIdPoste.setText( "" );
+                txtCantidad1.setText( "" );
+                txtWatts1.setText( "" );
+                txtCarga1.setText( "" );
+                txtCantidad2.setText( "" );
+                txtWatts2.setText( "" );
+                txtCarga2.setText( "" );
+                txtEquipoAux.setText( "" );
+                txtGeoX.setText( "" );
+                txtGeoY.setText( "" );
+
+                chkCondicionPoste.setChecked( false );
+                chkCondicionLampara1.setChecked( false );
+                chkCondicionLampara2.setChecked( false );
+
+                ivFoto.setImageResource( R.drawable.ic_launcher_foreground );
+
                 break;
 
             case "Guardar":
-              /*  if(spEstados.getSelectedItem() == null) {
-                    new SweetAlertDialog( fragment.getContext(), SweetAlertDialog.ERROR_TYPE).setTitleText("Debe seleccionar un estado").show();
+
+
+                if(spCensos.getSelectedItem() == null) {
+                    new SweetAlertDialog( fragment.getContext(), SweetAlertDialog.ERROR_TYPE)
+                            .setTitleText("Debe seleccionar un censo").show();
                     break;
                 }
-                if(spMunicipios.getSelectedItem() == null) {
-                    new SweetAlertDialog( fragment.getContext(), SweetAlertDialog.ERROR_TYPE).setTitleText("Debe seleccionar un municipio").show();
+
+                if(spTipoPoste.getSelectedItem() == null) {
+                    new SweetAlertDialog( fragment.getContext(), SweetAlertDialog.ERROR_TYPE)
+                            .setTitleText("Debe seleccionar un tipo de poste").show();
                     break;
                 }
-                if(rgCalle.getCheckedRadioButtonId() == -1) {
-                    new SweetAlertDialog( fragment.getContext(), SweetAlertDialog.ERROR_TYPE).setTitleText("Debe seleccionar un tipo de calle").show();
+
+                if(spTipoCarcasa.getSelectedItem() == null) {
+                    new SweetAlertDialog( fragment.getContext(), SweetAlertDialog.ERROR_TYPE)
+                            .setTitleText("Debe seleccionar un tipo de carcasa").show();
                     break;
                 }
-                if(rgTension.getCheckedRadioButtonId() == -1) {
-                    new SweetAlertDialog( fragment.getContext(), SweetAlertDialog.ERROR_TYPE).setTitleText("Debe seleccionar una tensión").show();
+
+                if(spTipoLampara1.getSelectedItem() == null) {
+                    new SweetAlertDialog( fragment.getContext(), SweetAlertDialog.ERROR_TYPE)
+                            .setTitleText("Debe seleccionar un tipo de lámpara 1").show();
+                    break;
+                }
+
+                if(chkCondicionLampara2.isChecked() && spTipoLampara2.getSelectedItem() == null) {
+                    new SweetAlertDialog( fragment.getContext(), SweetAlertDialog.ERROR_TYPE)
+                            .setTitleText("Debe seleccionar un tipo de lampara2").show();
                     break;
                 }
 
 
-                ECenso censo = new ECenso();
-                EMunicipio municipio = (EMunicipio) spMunicipios.getSelectedItem();
-                censo.IdMunicipio = municipio.IdMunicipio;
-                censo.Division = txtDivision.getText().toString();
-                censo.Zona = txtZona.getText().toString();
-                censo.Agencia = txtAgencia.getText().toString();
-                censo.Calle = txtCalle.getText().toString();
-                censo.IdCalleTipo =Integer.parseInt( getActivity().findViewById( rgCalle.getCheckedRadioButtonId()).getTag().toString());
-                censo.CalleMargen = txtCalleMargen.getText().toString();
-                censo.CalleMargenIzquierda = chkCalleMargenIzquierda.isChecked();
-                censo.CalleMargenDerecha = chkCalleMargenDerecha.isChecked();
-                censo.CalleMargenCentro = chkCalleMargenCentro.isChecked();
-                censo.Manzana = txtManzana.getText().toString();
-                censo.IdTension = Integer.parseInt(getActivity().findViewById( rgTension.getCheckedRadioButtonId()).getTag().toString());
-                censo.EntreCalle1 = txtEntreCalle1.getText().toString();
-                censo.EntreCalle2 = txtEntreCalle2.getText().toString();
-                censo.PoblacionColonia = txtPoblacionColonia.getText().toString();
-                censo.Localidad = txtLocalidad.getText().toString();
+
+
+
+
+                EPoste poste = new EPoste();
+                poste.IdCenso = ((ECenso) spCensos.getSelectedItem()).IdCenso ;
+
+                poste.CondicionPoste = chkCondicionPoste.isChecked();
+
+                poste.ID = txtIdPoste.getText().toString();
+
+                poste.IdTipoPoste = ((ETipoPoste) spTipoPoste.getSelectedItem()).IdTipoPoste;
+
+                poste.IdTipoCarcasa = ((ETipoCarcasa) spTipoCarcasa.getSelectedItem()).IdTipoCarcasa;
+
+                poste.CondicionLampara1 = chkCondicionLampara1.isChecked();
+
+                poste.IdTipoLampara1 = ((ETipoLampara) spTipoLampara1.getSelectedItem()).IdTipoLampara;
+
+                poste.Cantidad1 = Integer.parseInt( "0" + txtCantidad1.getText().toString() );
+
+                poste.WhatssLampara1 = Integer.parseInt( "0" + txtWatts1.getText().toString() );
+
+                poste.CargaWatts1 = Integer.parseInt( "0" + txtCarga1.getText().toString() );
+
+                poste.CondicionLampara2 = chkCondicionLampara2.isChecked();
+
+                poste.IdTipoLampara2 = ((ETipoLampara) spTipoLampara2.getSelectedItem()).IdTipoLampara;
+
+                poste.Cantidad2 = Integer.parseInt( "0" + txtCantidad2.getText().toString() );
+
+                poste.WhatssLampara2 = Integer.parseInt( "0" + txtWatts2.getText().toString() );
+
+                poste.CargaWatts2 = Integer.parseInt( "0" + txtCarga2.getText().toString() );
+
+                poste.EquipoAux = Integer.parseInt( "0" + txtEquipoAux.getText().toString() );
+
+                Bitmap bitmap = ((BitmapDrawable) ivFoto.getDrawable()).getBitmap();
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 50, baos);
+
+                poste.Foto = baos.toByteArray();
+
+                poste.GeoX = Double.parseDouble(  txtGeoX.getText().toString() );
+
+                poste.GeoY = Double.parseDouble( txtGeoY.getText().toString() );
+
+
 
                 if(!actualizar) {
-                    new TInsertarCenso( fragment.getContext() ).execute( censo );
+                    new TInsertarPoste( fragment.getContext() ).execute( poste );
                     actualizar = true;
                 } else {
-                    new TActualizarCenso( fragment.getContext() ).execute( censo );
+                    new TActualizarPoste( fragment.getContext() ).execute( poste );
                 }
-*/
+
+
         }
 
 

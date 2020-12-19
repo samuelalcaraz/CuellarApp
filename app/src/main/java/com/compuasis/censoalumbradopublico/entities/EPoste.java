@@ -8,7 +8,7 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "Poste")
 public class EPoste {
 
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     public int IdPoste;
 
     public int IdCenso;

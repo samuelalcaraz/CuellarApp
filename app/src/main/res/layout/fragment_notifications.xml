@@ -169,13 +169,16 @@
         app:layout_constraintTop_toBottomOf="@id/spTipoPoste"
         android:layout_marginStart="4dp"
         android:layout_marginTop="4dp">
+
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/txtCantidad1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/cantidad_hint"
-            android:maxLength="2"
-            android:singleLine="true" />
+            android:inputType="number"
+            android:maxLength="4"
+            android:singleLine="true"
+            android:textAlignment="textEnd" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -186,13 +189,16 @@
         app:layout_constraintTop_toBottomOf="@id/spTipoPoste"
         android:layout_marginStart="4dp"
         android:layout_marginTop="4dp">
+
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/txtWatts1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/watts_hint"
-            android:maxLength="2"
-            android:singleLine="true" />
+            android:inputType="number"
+            android:maxLength="4"
+            android:singleLine="true"
+            android:textAlignment="textEnd" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -203,14 +209,16 @@
         app:layout_constraintTop_toBottomOf="@id/spTipoPoste"
         android:layout_marginStart="4dp"
         android:layout_marginTop="4dp">
+
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/txtCarga1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/carga_hint"
-
-            android:maxLength="2"
-            android:singleLine="true" />
+            android:inputType="number"
+            android:maxLength="4"
+            android:singleLine="true"
+            android:textAlignment="textEnd" />
     </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -268,13 +276,16 @@
         app:layout_constraintTop_toBottomOf="@id/chkCondicionLampara1"
         android:layout_marginStart="4dp"
         android:layout_marginTop="4dp">
+
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/txtCantidad2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/cantidad_hint"
-            android:maxLength="2"
-            android:singleLine="true" />
+            android:inputType="number"
+            android:maxLength="4"
+            android:singleLine="true"
+            android:textAlignment="textEnd" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -285,13 +296,16 @@
         app:layout_constraintTop_toBottomOf="@id/chkCondicionLampara1"
         android:layout_marginStart="4dp"
         android:layout_marginTop="4dp">
+
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/txtWatts2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/watts_hint"
-            android:maxLength="2"
-            android:singleLine="true" />
+            android:inputType="number"
+            android:maxLength="4"
+            android:singleLine="true"
+            android:textAlignment="textEnd" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -302,14 +316,16 @@
         app:layout_constraintTop_toBottomOf="@id/chkCondicionLampara1"
         android:layout_marginStart="4dp"
         android:layout_marginTop="4dp">
+
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/txtCarga2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/carga_hint"
-
-            android:maxLength="2"
-            android:singleLine="true" />
+            android:inputType="number"
+            android:maxLength="4"
+            android:singleLine="true"
+            android:textAlignment="textEnd" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -321,13 +337,16 @@
         app:layout_constraintWidth_percent="0.3"
         android:layout_marginStart="8dp"
         android:layout_marginTop="4dp">
+
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/txtEquipoAux"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/equipo_aux"
-            android:maxLength="20"
-            android:singleLine="true" />
+            android:inputType="number"
+            android:maxLength="5"
+            android:singleLine="true"
+            android:textAlignment="textEnd" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
