@@ -6,3 +6,4 @@ Aumentar version
 Crear data
 Crear task insertar
 Crear task obtener
+crear funcion fill

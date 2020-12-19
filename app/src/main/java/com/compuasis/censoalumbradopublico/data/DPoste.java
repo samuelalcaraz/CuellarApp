@@ -18,7 +18,7 @@ public interface DPoste {
     EPoste getById(int IdPoste);
 
     @Query("SELECT * FROM  poste WHERE IdCenso = :IdCenso")
-    EPoste getByCenso(int IdCenso);
+    List<EPoste> getByCenso(int IdCenso);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(EPoste data);

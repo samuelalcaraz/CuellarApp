@@ -18,6 +18,12 @@
         tools:layout="@layout/fragment_dashboard" />
 
     <fragment
+        android:id="@+id/navigation_listapostes"
+        android:name="com.compuasis.censoalumbradopublico.ui.postes.PostesFragment"
+        android:label="@string/postes"
+        tools:layout="@layout/fragment_postes" />
+
+    <fragment
         android:id="@+id/navigation_notifications"
         android:name="com.compuasis.censoalumbradopublico.ui.notifications.NotificationsFragment"
         android:label="@string/title_notifications"
