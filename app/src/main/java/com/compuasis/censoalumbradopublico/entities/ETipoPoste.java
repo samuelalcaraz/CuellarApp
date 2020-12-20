@@ -9,13 +9,13 @@ import org.jetbrains.annotations.NotNull;
 public class ETipoPoste {
 
     @PrimaryKey
-    public int IdTipoPoste;
+    public int Id;
 
-    public String NombreTipoPoste;
+    public String Nombre;
 
     @NotNull
     @Override
     public String toString() {
-        return NombreTipoPoste;
+        return Nombre;
     }
 }

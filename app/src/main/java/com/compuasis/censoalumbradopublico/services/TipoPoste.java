@@ -5,11 +5,8 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import com.compuasis.censoalumbradopublico.Utilerias;
-import com.compuasis.censoalumbradopublico.entities.EMunicipio;
 import com.compuasis.censoalumbradopublico.entities.ETipoPoste;
-import com.compuasis.censoalumbradopublico.tasks.TInsertarMunicipio;
 import com.compuasis.censoalumbradopublico.tasks.TInsertarTipoPoste;
-import com.compuasis.censoalumbradopublico.ui.dashboard.DashboardFragment;
 import com.compuasis.censoalumbradopublico.ui.notifications.NotificationsFragment;
 import com.google.gson.reflect.TypeToken;
 
@@ -26,7 +23,7 @@ public class TipoPoste extends AsyncTask<Void, Void, List<ETipoPoste>> {
 
     OkHttpClient client = new OkHttpClient();
     private final WeakReference<Context> context;
-    private final String url = "https://alcaraz.mx/hosting/censoap/services/tipoposte.php";
+    private final String url = Services.Service_Base + "tipospostes";
 
     NotificationsFragment frament;
     public TipoPoste(Context context, NotificationsFragment fragment)

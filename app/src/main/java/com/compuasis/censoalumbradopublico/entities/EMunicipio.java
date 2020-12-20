@@ -5,14 +5,16 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "Municipio")
+//        indices = {@Index(value = {"IdEstado"})})
 public class EMunicipio {
 
     @PrimaryKey
-    public int IdMunicipio;
+    public int Id;
 
     public int ClaveMunicipio;
 
     public String Nombre;
+
 
     public int IdEstado;
 

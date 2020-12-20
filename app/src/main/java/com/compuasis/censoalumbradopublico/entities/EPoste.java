@@ -7,14 +7,13 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "Poste")
 public class EPoste {
 
-    @PrimaryKey(autoGenerate = true)
-    public int IdPoste;
-
-    public int IdCenso;
+    @NonNull
+    @PrimaryKey
+    public String Uuid;
 
     public boolean CondicionPoste;
 
-    public String ID;
+    public String PosteId;
 
     public int IdTipoPoste;
 
@@ -42,15 +41,17 @@ public class EPoste {
 
     public int EquipoAux;
 
-    public byte[] Foto;
+    public String Foto;
 
     public double GeoX;
 
     public double GeoY;
 
+    public String UuidCenso;
+
     @NonNull
     @Override
     public String toString() {
-        return ID;
+        return PosteId;
     }
 }

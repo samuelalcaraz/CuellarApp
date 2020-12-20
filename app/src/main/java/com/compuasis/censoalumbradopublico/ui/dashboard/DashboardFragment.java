@@ -23,6 +23,8 @@ import com.compuasis.censoalumbradopublico.entities.ECenso;
 import com.compuasis.censoalumbradopublico.entities.EEstado;
 import com.compuasis.censoalumbradopublico.entities.EMunicipio;
 import com.compuasis.censoalumbradopublico.services.States;
+import com.compuasis.censoalumbradopublico.services.TipoCalle;
+import com.compuasis.censoalumbradopublico.services.TipoTension;
 import com.compuasis.censoalumbradopublico.tasks.TActualizarCenso;
 import com.compuasis.censoalumbradopublico.tasks.TInsertarCenso;
 import com.compuasis.censoalumbradopublico.tasks.TObtenerEstado;
@@ -33,6 +35,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
@@ -117,7 +120,9 @@ public class DashboardFragment extends Fragment {
                 pDialog.show();
 
                 if(getContext() != null) {
-                    new States( getContext(), fragment ).execute( "https://alcaraz.mx/hosting/censoap/services/states.php" );
+                    new States( getContext(), fragment ).execute();
+                    new TipoCalle( getContext()).execute(  );
+                    new TipoTension( getContext() ).execute(  );
                 }
                 break;
 
@@ -159,16 +164,17 @@ public class DashboardFragment extends Fragment {
 
 
                 ECenso censo = new ECenso();
-                censo.Uuid = Utilerias.getUUID();
+                censo.Uuid = UUID.randomUUID().toString();
+                censo.MacAddress = Utilerias.getMacAddress(fragment.getContext());
                 EMunicipio municipio = (EMunicipio) spMunicipios.getSelectedItem();
-                censo.IdMunicipio = municipio.IdMunicipio;
+                censo.IdMunicipio = municipio.Id;
                 censo.Division = txtDivision != null && txtDivision.getText() != null ? txtDivision.getText().toString() : "";
                 censo.Zona = Objects.requireNonNull( txtZona.getText() ).toString();
                 censo.Agencia = Objects.requireNonNull( txtAgencia.getText() ).toString();
                 censo.Calle = Objects.requireNonNull( txtCalle.getText() ).toString();
 
                 if(getActivity() != null) {
-                    censo.IdCalleTipo = Integer.parseInt( getActivity().findViewById( rgCalle.getCheckedRadioButtonId() ).getTag().toString() );
+                    censo.IdTipoCalle = Integer.parseInt( getActivity().findViewById( rgCalle.getCheckedRadioButtonId() ).getTag().toString() );
                 }
 
                 censo.CalleMargen = Objects.requireNonNull( txtCalleMargen.getText() ).toString();
@@ -177,7 +183,7 @@ public class DashboardFragment extends Fragment {
                 censo.CalleMargenCentro = chkCalleMargenCentro.isChecked();
                 censo.Manzana = Objects.requireNonNull( txtManzana.getText() ).toString();
 
-                censo.IdTension = Integer.parseInt( getActivity().findViewById( rgTension.getCheckedRadioButtonId()).getTag().toString());
+                censo.IdTipoTension = Integer.parseInt( getActivity().findViewById( rgTension.getCheckedRadioButtonId()).getTag().toString());
 
                 censo.EntreCalle1 = Objects.requireNonNull( txtEntreCalle1.getText() ).toString();
                 censo.EntreCalle2 = Objects.requireNonNull( txtEntreCalle2.getText() ).toString();
@@ -223,7 +229,7 @@ public class DashboardFragment extends Fragment {
 
                 EEstado state = (EEstado) parent.getSelectedItem();
                 if(getContext() != null) {
-                    new TObtenerMunicipio( getContext(), fragment, state.IdEstado ).execute();
+                    new TObtenerMunicipio( getContext(), fragment, state.Id ).execute();
                 }
 
                 if (pDialog != null) {

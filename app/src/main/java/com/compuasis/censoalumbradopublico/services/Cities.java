@@ -5,9 +5,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import com.compuasis.censoalumbradopublico.Utilerias;
-import com.compuasis.censoalumbradopublico.entities.EEstado;
 import com.compuasis.censoalumbradopublico.entities.EMunicipio;
-import com.compuasis.censoalumbradopublico.tasks.TInsertarEstado;
 import com.compuasis.censoalumbradopublico.tasks.TInsertarMunicipio;
 import com.compuasis.censoalumbradopublico.ui.dashboard.DashboardFragment;
 import com.google.gson.reflect.TypeToken;
@@ -25,6 +23,8 @@ public class Cities extends AsyncTask<String, Void, List<EMunicipio>> {
 
     OkHttpClient client = new OkHttpClient();
     private final WeakReference<Context> context;
+    
+    private final String url = Services.Service_Base + "municipios";
 
     DashboardFragment fragment;
     public Cities(Context context, DashboardFragment fragment)
@@ -45,7 +45,7 @@ public class Cities extends AsyncTask<String, Void, List<EMunicipio>> {
     protected List<EMunicipio> doInBackground(String... strings) {
 
         Request request = new Request.Builder()
-                .url( strings[0] )
+                .url( url )
                 .build();
 
         String res;

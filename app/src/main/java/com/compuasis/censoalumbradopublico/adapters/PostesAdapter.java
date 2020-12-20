@@ -44,7 +44,7 @@ public class PostesAdapter extends
 
         EPoste data = mPostes.get(position);
 
-        holder.tvLinea1.setText( String.valueOf( data.ID ) );
+        holder.tvLinea1.setText( String.valueOf( data.PosteId ) );
         holder.tvLinea2.setText( "Cantidad: " + data.Cantidad1 + "   Watts: " + data.Watts1 + "   Carga: " + data.CargaWatts1 );
         holder.tvLinea3.setText( "Cantidad: " + data.Cantidad2 + "   Watts: " + data.Watts2 + "   Carga: " + data.CargaWatts2 );
 

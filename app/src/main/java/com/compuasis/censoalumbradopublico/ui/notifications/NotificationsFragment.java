@@ -2,15 +2,18 @@ package com.compuasis.censoalumbradopublico.ui.notifications;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Looper;
 import android.provider.MediaStore;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -27,6 +30,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 
 import com.compuasis.censoalumbradopublico.R;
@@ -55,9 +59,14 @@ import com.google.android.material.textfield.TextInputEditText;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.UUID;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
@@ -88,21 +97,19 @@ public class NotificationsFragment extends Fragment {
 
     boolean actualizar = false;
 
-    private void dispatchTakePictureIntent() {
-        Intent takePictureIntent = new Intent( MediaStore.ACTION_IMAGE_CAPTURE);
-        try {
-            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-        } catch (ActivityNotFoundException e) {
-            // display error state to the user
-        }
-    }
+    String currentPhotoPath;
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            Bundle extras = data.getExtras();
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
-            ivFoto.setImageBitmap(imageBitmap);
+
+
+
+            File f = new File( currentPhotoPath );
+            //Bitmap bitmap = Imagen.decodeSampledBitmapFromFile(currentPhotoPath,1024,768);
+            Bitmap bitmap = BitmapFactory.decodeFile( currentPhotoPath );
+
+            ivFoto.setImageBitmap(bitmap);
         }
     }
 
@@ -154,11 +161,18 @@ public class NotificationsFragment extends Fragment {
 
         if(getActivity() != null) {
             if (ActivityCompat.checkSelfPermission( this.getContext(), Manifest.permission.ACCESS_FINE_LOCATION ) != PackageManager.PERMISSION_GRANTED
-                    && ActivityCompat.checkSelfPermission( this.getContext(), Manifest.permission.ACCESS_COARSE_LOCATION ) != PackageManager.PERMISSION_GRANTED) {
+                    && ActivityCompat.checkSelfPermission( this.getContext(), Manifest.permission.ACCESS_COARSE_LOCATION ) != PackageManager.PERMISSION_GRANTED
+                    && ActivityCompat.checkSelfPermission( this.getContext(), Manifest.permission.READ_EXTERNAL_STORAGE ) != PackageManager.PERMISSION_GRANTED
+                    && ActivityCompat.checkSelfPermission( this.getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE ) != PackageManager.PERMISSION_GRANTED ){
 
 
                 ActivityCompat.requestPermissions( getActivity(),
-                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, MY_PERMISSIONS_REQUEST_LOCATION );
+                        new String[]{
+                                Manifest.permission.ACCESS_FINE_LOCATION,
+                                Manifest.permission.ACCESS_COARSE_LOCATION,
+                                Manifest.permission.READ_EXTERNAL_STORAGE,
+                                Manifest.permission.WRITE_EXTERNAL_STORAGE },
+                        MY_PERMISSIONS_REQUEST_LOCATION );
 
             } else {
                 ActivityCompat.requestPermissions( getActivity(),
@@ -248,6 +262,45 @@ public class NotificationsFragment extends Fragment {
         super.onCreateOptionsMenu(menu, inflater);
     }
 
+    private File createImageFile() throws IOException {
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = fragment.getActivity().getExternalFilesDir( Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(
+                imageFileName,  /* prefix */
+                ".jpg",         /* suffix */
+                storageDir      /* directory */
+        );
+
+        // Save a file: path for use with ACTION_VIEW intents
+        currentPhotoPath = image.getAbsolutePath();
+        return image;
+    }
+
+    private void dispatchTakePictureIntent() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        // Ensure that there's a camera activity to handle the intent
+        if (takePictureIntent.resolveActivity(fragment.getActivity().getPackageManager()) != null) {
+            // Create the File where the photo should go
+            File photoFile = null;
+            try {
+                photoFile = createImageFile();
+            } catch (IOException ex) {
+                // Error occurred while creating the File
+
+            }
+            // Continue only if the File was successfully created
+            if (photoFile != null) {
+                Uri photoURI = FileProvider.getUriForFile(fragment.getContext(),
+                        "com.example.android.fileprovider",
+                        photoFile);
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+            }
+        }
+    }
+
     @SuppressLint({"MissingPermission", "WrongThread"})
     public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -330,19 +383,20 @@ public class NotificationsFragment extends Fragment {
 
 
                 EPoste poste = new EPoste();
-                poste.IdCenso = ((ECenso) spCensos.getSelectedItem()).IdCenso ;
+                poste.Uuid = UUID.randomUUID().toString();
+                poste.UuidCenso = ((ECenso) spCensos.getSelectedItem()).Uuid;
 
                 poste.CondicionPoste = chkCondicionPoste.isChecked();
 
-                poste.ID = Objects.requireNonNull( txtIdPoste.getText() ).toString();
+                poste.PosteId = Objects.requireNonNull( txtIdPoste.getText() ).toString();
 
-                poste.IdTipoPoste = ((ETipoPoste) spTipoPoste.getSelectedItem()).IdTipoPoste;
+                poste.IdTipoPoste = ((ETipoPoste) spTipoPoste.getSelectedItem()).Id;
 
-                poste.IdTipoCarcasa = ((ETipoCarcasa) spTipoCarcasa.getSelectedItem()).IdTipoCarcasa;
+                poste.IdTipoCarcasa = ((ETipoCarcasa) spTipoCarcasa.getSelectedItem()).Id;
 
                 poste.CondicionLampara1 = chkCondicionLampara1.isChecked();
 
-                poste.IdTipoLampara1 = ((ETipoLampara) spTipoLampara1.getSelectedItem()).IdTipoLampara;
+                poste.IdTipoLampara1 = ((ETipoLampara) spTipoLampara1.getSelectedItem()).Id;
 
                 poste.Cantidad1 = Integer.parseInt( "0" + Objects.requireNonNull( txtCantidad1.getText() ).toString() );
 
@@ -352,7 +406,7 @@ public class NotificationsFragment extends Fragment {
 
                 poste.CondicionLampara2 = chkCondicionLampara2.isChecked();
 
-                poste.IdTipoLampara2 = ((ETipoLampara) spTipoLampara2.getSelectedItem()).IdTipoLampara;
+                poste.IdTipoLampara2 = ((ETipoLampara) spTipoLampara2.getSelectedItem()).Id;
 
                 poste.Cantidad2 = Integer.parseInt( "0" + Objects.requireNonNull( txtCantidad2.getText() ).toString() );
 
@@ -364,9 +418,9 @@ public class NotificationsFragment extends Fragment {
 
                 Bitmap bitmap = ((BitmapDrawable) ivFoto.getDrawable()).getBitmap();
                 ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 50, baos);
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 10, baos);
 
-                poste.Foto = baos.toByteArray();
+                poste.Foto = Base64.encodeToString(baos.toByteArray(), Base64.DEFAULT);
 
                 poste.GeoX = Double.parseDouble(  txtGeoX.getText().toString() );
 

@@ -1,5 +1,6 @@
 package com.compuasis.censoalumbradopublico.entities;
 
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -8,9 +9,8 @@ import org.jetbrains.annotations.NotNull;
 @Entity(tableName = "Censo")
 public class ECenso {
 
-    @PrimaryKey(autoGenerate = true)
-    public int IdCenso;
-
+    @NonNull
+    @PrimaryKey
     public String Uuid;
 
     public int IdMunicipio;
@@ -23,7 +23,7 @@ public class ECenso {
 
     public String Calle;
 
-    public int IdCalleTipo;
+    public int IdTipoCalle;
 
     public String CalleMargen;
 
@@ -35,7 +35,7 @@ public class ECenso {
 
     public String Manzana;
 
-    public int IdTension;
+    public int IdTipoTension;
 
     public String EntreCalle1;
 
@@ -45,13 +45,7 @@ public class ECenso {
 
     public String Localidad;
 
-    public String NombreEstado;
-
-    public String NombreMunicipio;
-
-    public String getEstadoMunicipio() {
-        return NombreEstado + ", " + NombreMunicipio;
-    }
+    public String MacAddress;
 
     public String getDivisionZonaAgencia() {
         return Division + ", " + Zona + ", " + Agencia;
@@ -60,6 +54,6 @@ public class ECenso {
     @NotNull
     @Override
     public String toString() {
-        return "[" + IdCenso + "] " + Calle;
+        return "[" + Uuid + "]";
     }
 }

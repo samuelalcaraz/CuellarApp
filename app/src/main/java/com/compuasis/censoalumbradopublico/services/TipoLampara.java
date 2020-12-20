@@ -24,7 +24,7 @@ public class TipoLampara extends AsyncTask<Void, Void, List<ETipoLampara>> {
     OkHttpClient client = new OkHttpClient();
     private final WeakReference<Context> context;
 
-    private final String url = "https://alcaraz.mx/hosting/censoap/services/tipolampara.php";
+    private final String url = Services.Service_Base + "tiposlamparas";
 
     NotificationsFragment fragment;
 

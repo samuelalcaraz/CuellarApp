@@ -6,13 +6,12 @@ import android.os.AsyncTask;
 import com.compuasis.censoalumbradopublico.data.DPoste;
 import com.compuasis.censoalumbradopublico.data.database;
 import com.compuasis.censoalumbradopublico.entities.EPoste;
-import com.compuasis.censoalumbradopublico.ui.home.HomeFragment;
 import com.compuasis.censoalumbradopublico.ui.postes.PostesFragment;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
 
-public class TObtenerPostes extends AsyncTask<Integer, Void, List<EPoste>> {
+public class TObtenerPostes extends AsyncTask<String, Void, List<EPoste>> {
 
     private final WeakReference<Context> context;
     PostesFragment fragment;
@@ -32,7 +31,7 @@ public class TObtenerPostes extends AsyncTask<Integer, Void, List<EPoste>> {
     }
 
     @Override
-    protected  List<EPoste> doInBackground(Integer... data) {
+    protected  List<EPoste> doInBackground(String... data) {
 
         DPoste dao = database.getDatabase(context.get()).dPoste();
 

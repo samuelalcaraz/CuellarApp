@@ -8,8 +8,6 @@ import android.net.wifi.WifiManager;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import java.util.UUID;
-
 public  class Utilerias {
 
     public static Gson getGson() {
@@ -26,9 +24,7 @@ public  class Utilerias {
         return macAddress;
     }
 
-    public static String getUUID() {
-        return UUID.randomUUID().toString();
-    }
+
 
 
 }

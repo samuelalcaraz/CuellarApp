@@ -4,7 +4,9 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="10dp">
+    android:background="@color/colorPrimary"
+    android:padding="4dp"
+    android:layout_marginBottom="4dp">
 
     <TextView
         android:id="@+id/tvEstadoMunicipio"
@@ -12,9 +14,9 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-
         android:text="Mensajede prueba"
         android:layout_marginEnd="4dp"
+        android:textColor="@color/button_text_color"
         />
     <TextView
         android:id="@+id/tvDivisionZonaAgencia"
@@ -22,6 +24,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/tvEstadoMunicipio"
         app:layout_constraintStart_toStartOf="parent"
+        android:textColor="@color/button_text_color"
         android:text="Mensajede prueba"
         android:layout_marginEnd="4dp"
         />
@@ -31,9 +34,8 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/tvDivisionZonaAgencia"
         app:layout_constraintStart_toStartOf="parent"
+        android:textColor="@color/button_text_color"
         android:text="Mensajede prueba"
         android:layout_marginEnd="4dp"
         />
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>

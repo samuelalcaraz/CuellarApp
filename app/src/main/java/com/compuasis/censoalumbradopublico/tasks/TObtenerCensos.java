@@ -5,13 +5,13 @@ import android.os.AsyncTask;
 
 import com.compuasis.censoalumbradopublico.data.DCenso;
 import com.compuasis.censoalumbradopublico.data.database;
-import com.compuasis.censoalumbradopublico.entities.ECenso;
+import com.compuasis.censoalumbradopublico.entities.ECensoPoste;
 import com.compuasis.censoalumbradopublico.ui.home.HomeFragment;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
 
-public class TObtenerCensos extends AsyncTask<Void, Void, List<ECenso>> {
+public class TObtenerCensos extends AsyncTask<Void, Void, List<ECensoPoste>> {
 
     private final WeakReference<Context> context;
     HomeFragment fragment;
@@ -24,18 +24,18 @@ public class TObtenerCensos extends AsyncTask<Void, Void, List<ECenso>> {
     }
 
     @Override
-    protected void onPostExecute(List<ECenso> data) {
+    protected void onPostExecute(List<ECensoPoste> data) {
         super.onPostExecute( data );
 
         this.fragment.fillCensos ( data );
     }
 
     @Override
-    protected  List<ECenso> doInBackground(Void... voids) {
+    protected  List<ECensoPoste> doInBackground(Void... voids) {
 
         DCenso dao = database.getDatabase(context.get()).dCenso();
 
-        return  dao.getAll();
+        return  dao.getCensoPoste();
 
     }
 }

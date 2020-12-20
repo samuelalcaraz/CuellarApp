@@ -5,20 +5,20 @@ import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
-import com.compuasis.censoalumbradopublico.entities.ETipoCarcasa;
+import com.compuasis.censoalumbradopublico.entities.ETipoTension;
 
 import java.util.List;
 
 @Dao
-public interface DTipoCarcasa {
+public interface DTipoTension {
 
-    @Query("SELECT * FROM TipoCarcasa ORDER BY Nombre")
-    List<ETipoCarcasa> getAll();
+    @Query("SELECT * FROM TipoTension ORDER BY Nombre")
+    List<ETipoTension> getAll();
 
-    @Query("DELETE FROM TipoCarcasa")
+    @Query("DELETE FROM TipoTension")
     void deleteAll();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insert(ETipoCarcasa data);
+    void insert(ETipoTension data);
 
 }

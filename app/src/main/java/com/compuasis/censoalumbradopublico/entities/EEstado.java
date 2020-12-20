@@ -2,19 +2,21 @@ package com.compuasis.censoalumbradopublico.entities;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
-import androidx.room.TypeConverters;
+
+import org.jetbrains.annotations.NotNull;
 
 @Entity(tableName = "Estado")
 public class EEstado {
 
     @PrimaryKey
-    public int IdEstado;
+    public int Id;
 
-    public String NombreEstado;
+    public String Nombre;
 
+    @NotNull
     @Override
     public String toString() {
-        return NombreEstado;
+        return Nombre;
     }
 
 }

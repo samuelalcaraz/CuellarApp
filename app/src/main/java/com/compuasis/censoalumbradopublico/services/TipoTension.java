@@ -5,9 +5,8 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import com.compuasis.censoalumbradopublico.Utilerias;
-import com.compuasis.censoalumbradopublico.entities.ETipoCarcasa;
-import com.compuasis.censoalumbradopublico.tasks.TInsertarTipoCarcasa;
-import com.compuasis.censoalumbradopublico.ui.notifications.NotificationsFragment;
+import com.compuasis.censoalumbradopublico.entities.ETipoTension;
+import com.compuasis.censoalumbradopublico.tasks.TInsertarTipoTension;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.IOException;
@@ -19,42 +18,38 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class TipoCarcasa extends AsyncTask<Void, Void, List<ETipoCarcasa>> {
+public class TipoTension extends AsyncTask<Void, Void, List<ETipoTension>> {
 
     OkHttpClient client = new OkHttpClient();
     private final WeakReference<Context> context;
+    private final String url = Services.Service_Base + "tipostensiones";
 
-    private final String url = Services.Service_Base + "tiposcarcasas";
-
-    NotificationsFragment fragment;
-
-    public TipoCarcasa(Context context, NotificationsFragment fragment)
+    public TipoTension(Context context)
     {
         this.context = new WeakReference<>(context);
-        this.fragment = fragment;
     }
 
     @Override
-    protected void onPostExecute(List<ETipoCarcasa> s) {
+    protected void onPostExecute(List<ETipoTension> s) {
 
         super.onPostExecute( s );
 
-        new TInsertarTipoCarcasa( this.context.get(), this.fragment).execute( s );
+        new TInsertarTipoTension( this.context.get() ).execute( s );
     }
 
     @Override
-    protected List<ETipoCarcasa> doInBackground(Void... voids) {
+    protected List<ETipoTension> doInBackground(Void... voids) {
 
         Request request = new Request.Builder()
-                .url( this.url )
+                .url( url )
                 .build();
 
         String res;
         try (Response response = client.newCall( request ).execute()) {
             res =  Objects.requireNonNull( response.body() ).string();
 
-            Log.i( "ObtenerTipoCacasa", res );
-            return Utilerias.getGson().fromJson(res, new TypeToken<List<ETipoCarcasa>>(){}.getType());
+            Log.i( "ObtenerTipoTension", res );
+            return Utilerias.getGson().fromJson(res, new TypeToken<List<ETipoTension>>(){}.getType());
 
         } catch (IOException e) {
             return  null;

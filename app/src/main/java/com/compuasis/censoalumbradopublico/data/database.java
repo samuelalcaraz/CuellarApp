@@ -12,9 +12,11 @@ import com.compuasis.censoalumbradopublico.entities.ECenso;
 import com.compuasis.censoalumbradopublico.entities.EEstado;
 import com.compuasis.censoalumbradopublico.entities.EMunicipio;
 import com.compuasis.censoalumbradopublico.entities.EPoste;
+import com.compuasis.censoalumbradopublico.entities.ETipoCalle;
 import com.compuasis.censoalumbradopublico.entities.ETipoCarcasa;
 import com.compuasis.censoalumbradopublico.entities.ETipoLampara;
 import com.compuasis.censoalumbradopublico.entities.ETipoPoste;
+import com.compuasis.censoalumbradopublico.entities.ETipoTension;
 
 @Database(entities =
         {
@@ -24,8 +26,10 @@ import com.compuasis.censoalumbradopublico.entities.ETipoPoste;
                 EPoste.class,
                 ETipoPoste.class,
                 ETipoCarcasa.class,
-                ETipoLampara.class
-        }, version = 10)
+                ETipoLampara.class,
+                ETipoCalle.class,
+                ETipoTension.class
+        }, version = 20, exportSchema = false)
 public abstract class database extends RoomDatabase {
 
     public abstract DEstado dEstado();
@@ -41,6 +45,10 @@ public abstract class database extends RoomDatabase {
     public abstract DTipoCarcasa dTipoCarcasa();
 
     public abstract DTipoLampara dTipoLampara();
+
+    public abstract DTipoCalle dTipoCalle();
+
+    public abstract DTipoTension dTipoTension();
 
     private static volatile database INSTANCE;
 

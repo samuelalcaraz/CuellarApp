@@ -5,8 +5,8 @@ import androidx.room.PrimaryKey;
 
 import org.jetbrains.annotations.NotNull;
 
-@Entity(tableName = "TipoCarcasa")
-public class ETipoCarcasa {
+@Entity(tableName = "TipoTension")
+public class ETipoTension {
 
     @PrimaryKey
     public int Id;

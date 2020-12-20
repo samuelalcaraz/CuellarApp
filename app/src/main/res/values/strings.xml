@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">CensoAlumbradoPublico</string>
-    <string name="title_home">Lista</string>
+    <string name="title_home">Censos</string>
     <string name="title_dashboard">Censo</string>
     <string name="title_notifications">Poste</string>
     <string name="cve_mun">CVE MUN</string>

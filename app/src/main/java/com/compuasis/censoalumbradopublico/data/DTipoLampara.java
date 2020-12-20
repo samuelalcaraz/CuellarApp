@@ -12,7 +12,7 @@ import java.util.List;
 @Dao
 public interface DTipoLampara {
 
-    @Query("SELECT * FROM TipoLampara ORDER BY NombreTipoLampara")
+    @Query("SELECT * FROM TipoLampara ORDER BY Nombre")
     List<ETipoLampara> getAll();
 
     @Query("DELETE FROM TipoLampara")

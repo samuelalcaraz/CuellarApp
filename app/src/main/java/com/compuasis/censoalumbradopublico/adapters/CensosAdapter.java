@@ -5,13 +5,12 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.compuasis.censoalumbradopublico.R;
-import com.compuasis.censoalumbradopublico.entities.ECenso;
+import com.compuasis.censoalumbradopublico.entities.ECensoPoste;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -20,9 +19,9 @@ import java.util.List;
 public class CensosAdapter extends
         RecyclerView.Adapter<CensosAdapter.ViewHolder> {
 
-    private final List<ECenso> mCensos;
+    private final List<ECensoPoste> mCensos;
 
-    public CensosAdapter(List<ECenso> censos) {
+    public CensosAdapter(List<ECensoPoste> censos) {
         mCensos = censos;
     }
 
@@ -35,18 +34,18 @@ public class CensosAdapter extends
 
         View contactView = inflater.inflate(R.layout.item_censo, parent, false);
 
-        return new ViewHolder(contactView);
+        return new ViewHolder( contactView );
     }
 
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(CensosAdapter.ViewHolder holder, int position) {
 
-        ECenso censo = mCensos.get(position);
+        ECensoPoste data = mCensos.get(position);
 
-        holder.tvEstadoMunicipio.setText( "[" + censo.IdCenso + "] " + censo.getEstadoMunicipio() );
-        holder.tvDivisionZonaAgencia.setText( censo.getDivisionZonaAgencia() );
-        holder.tvCalle.setText( censo.Calle );
+        holder.tvEstadoMunicipio.setText( data.getEstadoMunicipio() );
+        holder.tvDivisionZonaAgencia.setText( data.Censo.getDivisionZonaAgencia() );
+        holder.tvCalle.setText( data.Censo.Calle + ", " + data.Censo.PoblacionColonia );
 
     }
 
@@ -55,10 +54,9 @@ public class CensosAdapter extends
         return mCensos.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
 
         public TextView tvEstadoMunicipio, tvDivisionZonaAgencia, tvCalle;
-        public Button btnAnadirPoste;
 
         public ViewHolder(View itemView) {
 

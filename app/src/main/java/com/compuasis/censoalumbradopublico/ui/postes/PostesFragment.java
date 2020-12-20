@@ -15,11 +15,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.compuasis.censoalumbradopublico.R;
-import com.compuasis.censoalumbradopublico.adapters.CensosAdapter;
 import com.compuasis.censoalumbradopublico.adapters.PostesAdapter;
-import com.compuasis.censoalumbradopublico.entities.ECenso;
 import com.compuasis.censoalumbradopublico.entities.EPoste;
-import com.compuasis.censoalumbradopublico.tasks.TObtenerPostes;
 import com.compuasis.censoalumbradopublico.ui.home.HomeViewModel;
 
 import org.jetbrains.annotations.NotNull;
@@ -64,7 +61,7 @@ public class PostesFragment extends Fragment {
 
         this.fragment = this;
 
-        new TObtenerPostes( fragment.getContext(), fragment ).execute( 1 );
+      //  new TObtenerPostes( fragment.getContext(), fragment ).execute( 1 );
 
 
         return root;

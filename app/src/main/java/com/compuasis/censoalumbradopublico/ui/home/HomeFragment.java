@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.compuasis.censoalumbradopublico.R;
 import com.compuasis.censoalumbradopublico.adapters.CensosAdapter;
-import com.compuasis.censoalumbradopublico.entities.ECenso;
+import com.compuasis.censoalumbradopublico.entities.ECensoPoste;
 import com.compuasis.censoalumbradopublico.services.CensoUpload;
 import com.compuasis.censoalumbradopublico.tasks.TObtenerCensos;
 
@@ -30,7 +30,7 @@ public class HomeFragment extends Fragment {
 
     HomeFragment fragment;
 
-    List<ECenso> censos;
+    List<ECensoPoste> censos;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -59,7 +59,7 @@ public class HomeFragment extends Fragment {
         return root;
     }
 
-    public void fillCensos(List<ECenso> censos) {
+    public void fillCensos(List<ECensoPoste> censos) {
 
         this.censos = censos;
         CensosAdapter adapter = new CensosAdapter(censos);

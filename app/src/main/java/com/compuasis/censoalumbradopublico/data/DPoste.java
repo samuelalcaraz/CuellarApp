@@ -4,8 +4,8 @@ import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+import androidx.room.Update;
 
-import com.compuasis.censoalumbradopublico.entities.ECenso;
 import com.compuasis.censoalumbradopublico.entities.EPoste;
 
 import java.util.List;
@@ -14,16 +14,14 @@ import java.util.List;
 @Dao
 public interface DPoste {
 
-    @Query("SELECT * FROM  poste WHERE IdPoste = :IdPoste")
-    EPoste getById(int IdPoste);
 
-    @Query("SELECT * FROM  poste WHERE IdCenso = :IdCenso")
-    List<EPoste> getByCenso(int IdCenso);
+    @Query("SELECT * FROM  poste WHERE Uuid = :Uuid")
+    List<EPoste> getByCenso(String Uuid);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(EPoste data);
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Update
     void update(EPoste data);
 
 }
