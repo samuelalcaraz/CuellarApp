@@ -13,12 +13,12 @@
 
     <item
         android:id="@+id/navigation_listapostes"
-        android:icon="@drawable/ic_notifications_black_24dp"
+        android:icon="@drawable/ic_postes"
         android:title="@string/postes" />
 
     <item
         android:id="@+id/navigation_notifications"
-        android:icon="@drawable/ic_notifications_black_24dp"
+        android:icon="@drawable/ic_poste"
         android:title="@string/title_notifications" />
 
 

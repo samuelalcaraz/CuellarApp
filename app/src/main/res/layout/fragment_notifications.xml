@@ -17,7 +17,7 @@
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginTop="4dp"
         android:layout_marginStart="8dp"
-        android:layout_marginEnd="4dp"/>
+        android:layout_marginEnd="0dp"/>
 
     <Spinner
         android:id="@+id/spCensos"
@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:layout_marginStart="8dp"
-        android:layout_marginEnd="4dp"
+        android:layout_marginEnd="0dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvCenso" />
 
@@ -67,6 +67,7 @@
             android:layout_height="wrap_content"
             android:hint="@string/id_poste"
             android:maxLength="20"
+            android:layout_marginEnd="4dp"
             android:singleLine="true" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -90,7 +91,7 @@
         app:layout_constraintStart_toEndOf="@id/tvTipoPoste"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="4dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="0dp"
         android:layout_marginEnd="4dp"/>
 
     <Spinner
@@ -98,7 +99,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="4dp"
         android:layout_marginEnd="4dp"
         app:layout_constraintWidth_percent="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -109,8 +110,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="4dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginEnd="0dp"
         app:layout_constraintStart_toEndOf="@id/spTipoPoste"
         app:layout_constraintTop_toBottomOf="@id/tvTipoCarcasa"
         app:layout_constraintEnd_toEndOf="parent"/>
@@ -163,7 +164,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tilCantidad1"
-        android:layout_width="60dp"
+        android:layout_width="50dp"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toEndOf="@id/spTipoLampra1"
         app:layout_constraintTop_toBottomOf="@id/spTipoPoste"
@@ -172,6 +173,7 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/txtCantidad1"
+            android:nextFocusDown="@id/txtWatts1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/cantidad_hint"
@@ -183,7 +185,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tilWatts1"
-        android:layout_width="60dp"
+        android:layout_width="50dp"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toEndOf="@id/tilCantidad1"
         app:layout_constraintTop_toBottomOf="@id/spTipoPoste"
@@ -192,6 +194,7 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/txtWatts1"
+            android:nextFocusDown="@id/txtCarga1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/watts_hint"
@@ -203,7 +206,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tilCarga1"
-        android:layout_width="60dp"
+        android:layout_width="50dp"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toEndOf="@id/tilWatts1"
         app:layout_constraintTop_toBottomOf="@id/spTipoPoste"
@@ -212,6 +215,7 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/txtCarga1"
+            android:nextFocusDown="@id/txtCantidad2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/carga_hint"
@@ -270,7 +274,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tilCantidad2"
-        android:layout_width="60dp"
+        android:layout_width="50dp"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toEndOf="@id/spTipoLampra2"
         app:layout_constraintTop_toBottomOf="@id/chkCondicionLampara1"
@@ -279,6 +283,7 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/txtCantidad2"
+            android:nextFocusDown="@id/txtWatts2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/cantidad_hint"
@@ -290,7 +295,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tilWatts2"
-        android:layout_width="60dp"
+        android:layout_width="50dp"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toEndOf="@id/tilCantidad2"
         app:layout_constraintTop_toBottomOf="@id/chkCondicionLampara1"
@@ -299,6 +304,7 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/txtWatts2"
+            android:nextFocusDown="@id/txtCarga2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/watts_hint"
@@ -310,7 +316,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tilCarga2"
-        android:layout_width="60dp"
+        android:layout_width="50dp"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toEndOf="@id/tilWatts2"
         app:layout_constraintTop_toBottomOf="@id/chkCondicionLampara1"

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">CensoAlumbradoPublico</string>
+    <string name="app_name">Censo Alumbrado Público</string>
     <string name="title_home">Censos</string>
     <string name="title_dashboard">Censo</string>
     <string name="title_notifications">Poste</string>
@@ -32,14 +32,14 @@
     <string name="guardar">Guardar</string>
     <string name="id_poste">ID Poste</string>
     <string name="cantidad">Cantidad</string>
-    <string name="cantidad_hint"><font size="35">Cantidad</font></string>
+    <string name="cantidad_hint"><font size="35">Cant.</font></string>
     <string name="watts_hint"><font size="35">Watts</font></string>
     <string name="carga_hint"><font size="35">Carga</font></string>
     <string name="equipo_aux">Equipo Aux</string>
     <string name="actualizar_ubicaci_n">Actualizar ubicación</string>
     <string name="gps">GPS</string>
     <string name="postes">Postes</string>
-    <string name="upload">Upload</string>
+    <string name="upload">Subir</string>
     <string-array name="calleMargen">
         <item>Derecha</item>
         <item>Izquierda</item>

@@ -151,7 +151,7 @@
             android:layout_height="wrap_content"
             android:text="@string/HORIZONTAL"
             android:tag="1"
-            android:paddingEnd="4dp"
+            android:paddingEnd="2dp"
             />
 
         <RadioButton
@@ -161,7 +161,7 @@
             android:layout_height="wrap_content"
             android:text="@string/vertical"
             android:tag="2"
-            android:paddingEnd="4dp"
+            android:paddingEnd="2dp"
             />
 
         <RadioButton
@@ -170,7 +170,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/carretera"
-            android:paddingEnd="4dp"
+            android:paddingEnd="2dp"
             android:tag="3"
             />
 
@@ -180,7 +180,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/glorieta"
-            android:paddingEnd="4dp"
+            android:paddingEnd="2dp"
             android:tag="4"
             />
     </RadioGroup>
@@ -244,7 +244,7 @@
         android:id="@+id/tilManzana"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintWidth_percent="0.6"
+        app:layout_constraintWidth_percent="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/chkCalleMargenDerecha"
         android:layout_marginStart="8dp"

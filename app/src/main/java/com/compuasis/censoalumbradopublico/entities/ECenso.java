@@ -54,6 +54,6 @@ public class ECenso {
     @NotNull
     @Override
     public String toString() {
-        return "[" + Uuid + "]";
+        return Calle  + ", " + PoblacionColonia;
     }
 }

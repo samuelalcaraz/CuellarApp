@@ -339,7 +339,7 @@ public class NotificationsFragment extends Fragment {
                 chkCondicionLampara1.setChecked( false );
                 chkCondicionLampara2.setChecked( false );
 
-                ivFoto.setImageResource( R.drawable.ic_launcher_foreground );
+                ivFoto.setImageResource(R.mipmap.ic_launcher_foreground );
 
                 break;
 
@@ -347,36 +347,41 @@ public class NotificationsFragment extends Fragment {
 
 
                 if(spCensos.getSelectedItem() == null) {
-                    new SweetAlertDialog( fragment.getContext(), SweetAlertDialog.ERROR_TYPE)
+                    new SweetAlertDialog( fragment.getContext(), SweetAlertDialog.WARNING_TYPE)
                             .setTitleText("Debe seleccionar un censo").show();
                     break;
                 }
 
                 if(spTipoPoste.getSelectedItem() == null) {
-                    new SweetAlertDialog( fragment.getContext(), SweetAlertDialog.ERROR_TYPE)
+                    new SweetAlertDialog( fragment.getContext(), SweetAlertDialog.WARNING_TYPE)
                             .setTitleText("Debe seleccionar un tipo de poste").show();
                     break;
                 }
 
                 if(spTipoCarcasa.getSelectedItem() == null) {
-                    new SweetAlertDialog( fragment.getContext(), SweetAlertDialog.ERROR_TYPE)
+                    new SweetAlertDialog( fragment.getContext(), SweetAlertDialog.WARNING_TYPE)
                             .setTitleText("Debe seleccionar un tipo de carcasa").show();
                     break;
                 }
 
                 if(spTipoLampara1.getSelectedItem() == null) {
-                    new SweetAlertDialog( fragment.getContext(), SweetAlertDialog.ERROR_TYPE)
+                    new SweetAlertDialog( fragment.getContext(), SweetAlertDialog.WARNING_TYPE)
                             .setTitleText("Debe seleccionar un tipo de lámpara 1").show();
                     break;
                 }
 
                 if(chkCondicionLampara2.isChecked() && spTipoLampara2.getSelectedItem() == null) {
-                    new SweetAlertDialog( fragment.getContext(), SweetAlertDialog.ERROR_TYPE)
+                    new SweetAlertDialog( fragment.getContext(), SweetAlertDialog.WARNING_TYPE)
                             .setTitleText("Debe seleccionar un tipo de lampara2").show();
                     break;
                 }
 
 
+                if(txtGeoX.getText().toString().equals( "" )) {
+                    new SweetAlertDialog( fragment.getContext(), SweetAlertDialog.WARNING_TYPE)
+                            .setTitleText("Debe obtener la ubicación").show();
+                    break;
+                }
 
 
 
