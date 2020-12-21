@@ -106,7 +106,6 @@ public class NotificationsFragment extends Fragment {
 
 
             File f = new File( currentPhotoPath );
-            //Bitmap bitmap = Imagen.decodeSampledBitmapFromFile(currentPhotoPath,1024,768);
             Bitmap bitmap = BitmapFactory.decodeFile( currentPhotoPath );
 
             ivFoto.setImageBitmap(bitmap);

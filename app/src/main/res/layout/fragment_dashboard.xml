@@ -32,18 +32,19 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toEndOf="@id/tvEstado"
         />
+
     <Spinner
         android:id="@+id/spEstados"
+        android:nextFocusDown="@id/spMunicpios"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="0dp"
-        android:layout_marginEnd="4dp"
-        app:layout_constraintWidth_percent="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvEstado" />
+        app:layout_constraintTop_toBottomOf="@id/tvEstado"
+        app:layout_constraintWidth_percent="0.5" />
 
     <Spinner
         android:id="@+id/spMunicpios"
+        android:nextFocusDown="@id/tilDivision"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="0dp"
@@ -54,6 +55,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tilDivision"
+
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintWidth_percent="0.3"
@@ -63,6 +65,7 @@
         android:layout_marginTop="4dp">
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/txtDivision"
+            android:nextFocusDown="@id/txtZona"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/divisi_n"
@@ -72,6 +75,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tilZona"
+        android:nextFocusForward="@id/tilAgencia"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintWidth_percent="0.3"
@@ -81,6 +85,7 @@
         android:layout_marginTop="4dp">
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/txtZona"
+            android:nextFocusDown="@id/txtAgencia"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/zona"
@@ -101,6 +106,7 @@
         android:layout_marginEnd="8dp">
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/txtAgencia"
+            android:nextFocusDown="@id/txtCalle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/agencia"
@@ -120,6 +126,7 @@
         android:layout_marginTop="4dp">
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/txtCalle"
+            android:nextFocusDown="@id/rgCalle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/calle"
@@ -129,6 +136,7 @@
 
     <RadioGroup
         android:id="@+id/rgCalle"
+        android:nextFocusDown="@id/txtCalleMargen"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -187,8 +195,10 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginTop="4dp">
+
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/txtCalleMargen"
+            android:nextFocusDown="@id/chkCalleMargenDerecha"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/calle_margen"
@@ -198,6 +208,7 @@
 
     <CheckBox
         android:id="@+id/chkCalleMargenDerecha"
+        android:nextFocusDown="@id/chkCalleMargenIzquierda"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/derecha"
@@ -208,6 +219,7 @@
          />
     <CheckBox
         android:id="@+id/chkCalleMargenIzquierda"
+        android:nextFocusDown="@id/chkCalleMargenCentro"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/izquierda"
@@ -219,6 +231,7 @@
 
     <CheckBox
         android:id="@+id/chkCalleMargenCentro"
+        android:nextFocusDown="@id/txtManzana"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/centro"
@@ -239,6 +252,7 @@
         android:layout_marginTop="4dp">
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/txtManzana"
+            android:nextFocusDown="@id/rgTension"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/manzana"
@@ -270,6 +284,7 @@
     <RadioButton
 
         android:id="@+id/chkCalleHorizontal"
+        android:nextFocusDown="@id/txtEntreCalle1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/baja"

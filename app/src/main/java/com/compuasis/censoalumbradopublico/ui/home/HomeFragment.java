@@ -18,11 +18,14 @@ import com.compuasis.censoalumbradopublico.R;
 import com.compuasis.censoalumbradopublico.adapters.CensosAdapter;
 import com.compuasis.censoalumbradopublico.entities.ECensoPoste;
 import com.compuasis.censoalumbradopublico.services.CensoUpload;
+import com.compuasis.censoalumbradopublico.services.EResult;
 import com.compuasis.censoalumbradopublico.tasks.TObtenerCensos;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
+
+import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class HomeFragment extends Fragment {
 
@@ -31,6 +34,8 @@ public class HomeFragment extends Fragment {
     HomeFragment fragment;
 
     List<ECensoPoste> censos;
+
+    SweetAlertDialog pDialog = null;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -68,11 +73,31 @@ public class HomeFragment extends Fragment {
 
     }
 
+    public void respuestaUpload(EResult result) {
+
+        this.pDialog.cancel();
+
+        if(result.Exito) {
+            new SweetAlertDialog(this.getContext(), SweetAlertDialog.SUCCESS_TYPE)
+                    .setTitleText("La información se subió correctamente.")
+                    .show();
+        } else {
+            new SweetAlertDialog(this.getContext(), SweetAlertDialog.ERROR_TYPE)
+                    .setTitleText(result.Mensaje)
+                    .show();
+        }
+    }
+
     public boolean onOptionsItemSelected(MenuItem item) {
 
         if ("Upload".equals( item.getTitle().toString() )) {
 
             if(this.censos != null && this.censos.size() >= 1) {
+
+                pDialog = new SweetAlertDialog(fragment.getContext(), SweetAlertDialog.PROGRESS_TYPE);
+                pDialog.setTitleText("Subiendo información a la nube");
+                pDialog.setCancelable(false);
+                pDialog.show();
 
                 new CensoUpload( fragment.getContext(), fragment ).execute( this.censos );
 

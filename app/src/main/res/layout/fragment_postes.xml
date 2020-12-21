@@ -7,6 +7,27 @@
     tools:context=".ui.postes.PostesFragment"
     >
 
+    <TextView
+        android:id="@+id/tvCenso"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Censo"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="4dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="4dp"/>
+
+    <Spinner
+        android:id="@+id/spCensos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="4dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvCenso" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvPostes"
         android:layout_width="0dp"
@@ -14,7 +35,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/spCensos"
         android:layout_margin="8dp"/>
 
 

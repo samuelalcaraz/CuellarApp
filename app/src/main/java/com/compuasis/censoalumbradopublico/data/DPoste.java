@@ -15,7 +15,7 @@ import java.util.List;
 public interface DPoste {
 
 
-    @Query("SELECT * FROM  poste WHERE Uuid = :Uuid")
+    @Query("SELECT * FROM  poste WHERE UuidCenso = :Uuid")
     List<EPoste> getByCenso(String Uuid);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

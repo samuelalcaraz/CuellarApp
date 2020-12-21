@@ -6,6 +6,9 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,7 +19,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.compuasis.censoalumbradopublico.R;
 import com.compuasis.censoalumbradopublico.adapters.PostesAdapter;
+import com.compuasis.censoalumbradopublico.entities.ECenso;
 import com.compuasis.censoalumbradopublico.entities.EPoste;
+import com.compuasis.censoalumbradopublico.tasks.TObtenerCensosComboRv;
+import com.compuasis.censoalumbradopublico.tasks.TObtenerPostes;
 import com.compuasis.censoalumbradopublico.ui.home.HomeViewModel;
 
 import org.jetbrains.annotations.NotNull;
@@ -26,13 +32,14 @@ import java.util.List;
 public class PostesFragment extends Fragment {
 
     private HomeViewModel homeViewModel;
-    RecyclerView rvCensos;
+    RecyclerView rvPostes;
 
+    Spinner spCensos;
     PostesFragment fragment;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
-        setHasOptionsMenu(true);
+       // setHasOptionsMenu(true);
         super.onCreate( savedInstanceState );
     }
 
@@ -47,31 +54,55 @@ public class PostesFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         homeViewModel =
                 ViewModelProviders.of( this ).get( HomeViewModel.class );
-        View root = inflater.inflate( R.layout.fragment_home, container, false );
-      /*  final TextView textView = root.findViewById( R.id.text_home );
-        homeViewModel.getText().observe( getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText( s );
-            }
-        } );*/
+        View root = inflater.inflate( R.layout.fragment_postes, container, false );
 
 
-        rvCensos = (RecyclerView) root.findViewById(R.id.rvCensos);
+
+        rvPostes =  root.findViewById(R.id.rvPostes);
+        spCensos = root.findViewById( R.id.spCensos );
 
         this.fragment = this;
 
-      //  new TObtenerPostes( fragment.getContext(), fragment ).execute( 1 );
+        spCensos.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+
+                ECenso data = (ECenso) parent.getSelectedItem();
+                if(getContext() != null) {
+                    new TObtenerPostes( fragment.getContext(), fragment ).execute( data.Uuid );
+                }
+
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+
+        if(getContext() != null) {
+            new TObtenerCensosComboRv( this.getContext(), fragment ).execute();
+        }
 
 
         return root;
     }
 
+    public void fillCensos(List<ECenso> list){
+
+        ArrayAdapter<ECenso> adapter = new ArrayAdapter<>( getContext(),
+                android.R.layout.simple_spinner_item, list );
+
+        adapter.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item);
+
+        spCensos.setAdapter( adapter );
+
+    }
+
     public void fillPostes(List<EPoste> list) {
 
         PostesAdapter adapter = new PostesAdapter(list);
-        rvCensos.setAdapter(adapter);
-        rvCensos.setLayoutManager(new LinearLayoutManager(fragment.getContext()));
+        rvPostes.setAdapter(adapter);
+        rvPostes.setLayoutManager(new LinearLayoutManager(fragment.getContext()));
 
     }
 }
